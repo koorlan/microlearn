@@ -1,0 +1,3 @@
+INSERT INTO MODULE (id, title, content) VALUES (1, 'Module1', 'content1'),(2, 'Module2', 'content2'),(3, 'Module3', 'content3'),(4, 'Module4', 'content4'),(5, 'Module5', 'content5'),(6, 'Module6', 'content6'),(7, 'Module7', 'content7');
+
+INSERT INTO ACCOUNT ( type,login, password) VALUES ('TEACHER','korlant','f2d81a260dea8a100dd517984e53c56a7523d96942a834b9cdc249bd4e8c7aa9'),('STUDENT','korlans','f2d81a260dea8a100dd517984e53c56a7523d96942a834b9cdc249bd4e8c7aa9');

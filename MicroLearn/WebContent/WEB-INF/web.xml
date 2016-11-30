@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>MicroLearn</display-name>
+  <welcome-file-list>
+    <welcome-file>DefaultControler</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>DefaultServlet</servlet-name>
+    <servlet-class>com.microlearn.controler.DefaultControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DefaultServlet</servlet-name>
+    <url-pattern></url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>StudentServlet</servlet-name>
+    <servlet-class>com.microlearn.controler.StudentControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StudentServlet</servlet-name>
+    <url-pattern>/student</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>TeacherServlet</servlet-name>
+    <servlet-class>com.microlearn.controler.TeacherControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TeacherServlet</servlet-name>
+    <url-pattern>/teacher</url-pattern>
+  </servlet-mapping>
+</web-app>
