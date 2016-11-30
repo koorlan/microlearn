@@ -1,8 +1,7 @@
 package com.microlearn.controler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,8 +14,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ModuleBean;
-import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.entity.Teacher;
+import com.microlearn.type.TAccount;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Student;
 
@@ -82,14 +81,19 @@ public class DefaultControler extends HttpServlet {
 				return;
 			}else{
 				//redirect to student or teacher
-				if(this.serviceAccount.getStudent(account.getLogin(),account.getPassword()) instanceof Student) {
+				switch(account.getType()){
+				case TAccount.STUDENT:
 					request.getRequestDispatcher("/student").forward(request, response);
 					return;
-				}else if(this.serviceAccount.getTeacher(account.getLogin(),account.getPassword()) instanceof Teacher){
+				case TAccount.TEACHER:
 					request.getRequestDispatcher("/teacher").forward(request, response);
 					return;
-				}	
-				return;
+				// TODO : Admin ? lol TAccount.ADMIN
+				default:
+					//Why are we here  ? :p
+					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					return;
+				}
 			}
 		default:
 			break;
@@ -100,7 +104,6 @@ public class DefaultControler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

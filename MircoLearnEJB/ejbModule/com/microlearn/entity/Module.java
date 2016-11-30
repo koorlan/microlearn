@@ -13,8 +13,12 @@ public class Module {
 	@OneToMany(mappedBy="module")
 	private List<Chapter> chapters;
 	
+	@ManyToOne
+	private Teacher teacher;
+	
 	private String title;
 	private String content;
+	
 	
 	
 	public long getId() {
@@ -40,6 +44,12 @@ public class Module {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public Teacher getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 	
 	

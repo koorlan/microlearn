@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.microlearn.bean.ModuleBean;
+import com.microlearn.entity.Account;
 import com.microlearn.entity.dto.ModuleDto;
+import com.microlearn.type.TAccount;
 
 /**
  * Servlet implementation class TeacherControler
@@ -35,11 +37,15 @@ public class TeacherControler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		List<ModuleDto> modules = this.serviceModule.getModules();
-
-    	request.getSession().setAttribute("moduleList",new ArrayList<ModuleDto>(modules));
-		request.getRequestDispatcher("/teacher/index.jsp").forward(request, response);
+		Account account = (Account) request.getSession().getAttribute("account");
+		if(account != null && (account.getType() == TAccount.TEACHER) ){
+			List<ModuleDto> modules = this.serviceModule.getModules();
+	    	request.getSession().setAttribute("moduleList",new ArrayList<ModuleDto>(modules));
+	    	request.getRequestDispatcher("/teacher/index.jsp").forward(request, response);
+		}else{
+			request.getRequestDispatcher("/").forward(request, response);
+		} 	
+		
 	}
 
 	/**

@@ -1,11 +1,26 @@
 package com.microlearn.entity;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import java.util.List;
+
+import javax.persistence.*;
+
 
 
 @Entity
-@DiscriminatorValue("TEACHER")
+@DiscriminatorValue(com.microlearn.type.TAccount.TEACHER)
 public class Teacher extends Account {
+	
+	@OneToMany(mappedBy="teacher")
+	private List<Module> modules;
 
+	public List<Module> getModules() {
+		return modules;
+	}
+
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
+
+	
+	
 }

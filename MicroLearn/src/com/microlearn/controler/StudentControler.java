@@ -16,6 +16,7 @@ import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.dto.ModuleDto;
+import com.microlearn.type.TAccount;
 
 /**
  * Servlet implementation class StudentControler
@@ -40,9 +41,8 @@ public class StudentControler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		Account account = (Account) request.getSession().getAttribute("account");
-		if(account != null && (this.serviceAccount.getStudent(account.getLogin(),account.getPassword()) instanceof Student) ){
+		if(account != null && (account.getType() == TAccount.STUDENT) ){
 			List<ModuleDto> modules = this.serviceModule.getModules();
 	    	request.getSession().setAttribute("moduleList",new ArrayList<ModuleDto>(modules));
 	    	request.getRequestDispatcher("/student/index.jsp").forward(request, response);
@@ -56,7 +56,6 @@ public class StudentControler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
