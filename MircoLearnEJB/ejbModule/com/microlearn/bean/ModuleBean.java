@@ -17,6 +17,7 @@ public class ModuleBean {
 	@PersistenceContext(unitName="MicroLearn")
 	private EntityManager em;
 	
+
 	public List<ModuleDto> getModules(){
 		List<Module> modules = em.createQuery("From Module m").getResultList();
 		List<ModuleDto> modulesDto = new ArrayList<ModuleDto>();

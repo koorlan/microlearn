@@ -1,4 +1,4 @@
-package com.microlearn.controler;
+package com.microlearn.controller;
 
 import java.io.IOException;
 
@@ -24,8 +24,8 @@ import com.microlearn.entity.Student;
 /**
  * Servlet implementation class DefaultControler
  */
-@WebServlet(name="DefaultControler", urlPatterns={"/DefaultControler"})
-public class DefaultControler extends HttpServlet {
+@WebServlet(name="DefaultController", urlPatterns={"/DefaultController"})
+public class DefaultController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	@EJB
@@ -35,7 +35,7 @@ public class DefaultControler extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DefaultControler() {
+    public DefaultController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,7 +45,22 @@ public class DefaultControler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		
+		switch(request.getParameter("todo")){
+		case "log_in":
+			this.log_in(request, response);
+			return;
+		case "log_out":
+			this.log_out(request, response);
+			return;
+		default:
+			break;
+		}
+		
+	}
+	
+	public void log_in(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String n_login = request.getParameter("login");
 		String n_password = (String) request.getParameter("password");
 		if ((n_login != null) && (n_password != null)) {
@@ -65,31 +80,13 @@ public class DefaultControler extends HttpServlet {
 			}
 		}
 	}
-	
-	public void refresh(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Account account = (Account) request.getSession().getAttribute("account");
-		if(account == null){
-			//We are not log in and we try to access index page so we redirect user to the login page
-			request.getRequestDispatcher("/default/login.jsp").forward(request, response);
-			return;
-		}else{
-			//redirect to student or teacher
-			switch(account.getType()){
-			case TAccount.STUDENT:
-				request.getRequestDispatcher("/student").forward(request, response);
-				return;
-			case TAccount.TEACHER:
-				request.getRequestDispatcher("/teacher").forward(request, response);
-				return;
-			// TODO : Admin ? lol TAccount.ADMIN
-			default:
-				//Why are we here  ? :p
-				request.getRequestDispatcher("/default/login.jsp").forward(request, response);
-				return;
-			}
-		}
+
+	public void log_out(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().setAttribute("account", null);
+		response.sendRedirect(request.getContextPath());
 	}
 
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

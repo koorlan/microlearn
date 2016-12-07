@@ -1,4 +1,4 @@
-package com.microlearn.controler;
+package com.microlearn.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,25 +11,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
-import com.microlearn.entity.Teacher;
+import com.microlearn.entity.Student;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.type.TAccount;
 
 /**
- * Servlet implementation class TeacherControler
+ * Servlet implementation class StudentControler
  */
-@WebServlet(name="TeacherControler", urlPatterns={"/TeacherControler"})
-public class TeacherControler extends HttpServlet {
+@WebServlet(name="StudentController", urlPatterns={"StudentController"})
+public class StudentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
 	@EJB
 	private ModuleBean serviceModule;
+	@EJB
+	private AccountBean serviceAccount;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TeacherControler() {
+    public StudentController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,13 +41,14 @@ public class TeacherControler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Teacher teacher = (Teacher) request.getSession().getAttribute("account");
+		Account account = (Account) request.getSession().getAttribute("account");
+		if(account != null && (account.getType() == TAccount.STUDENT) ){
 			List<ModuleDto> modules = this.serviceModule.getModules();
 	    	request.getSession().setAttribute("moduleList",new ArrayList<ModuleDto>(modules));
-	    	request.getRequestDispatcher("/teacher/index.jsp").forward(request, response);
-	    	if(request.getParameter("todo").equals("add_text")){
-	    		System.out.println(request.getParameter("text"));
-	    	}
+	    	request.getRequestDispatcher("/student/index.jsp").forward(request, response);
+		}else{
+			request.getRequestDispatcher("/default").forward(request, response);
+		} 	
 		
 	}
 
@@ -52,7 +56,6 @@ public class TeacherControler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
