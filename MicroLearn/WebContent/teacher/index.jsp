@@ -16,6 +16,13 @@
 		<li>${module.title}</li>
 		<li>${module.content}</li>
 	</c:forEach>
+	
+	
+	 <form action="TeacherControler">
+	  <input type="text" name="text" value ="text"/>
+        <button type="submit" name="todo" value="add_text">add</button>
+    </form>
+	
 </ul>
 
 </body>
