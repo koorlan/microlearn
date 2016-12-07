@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.type.TAccount;
 
 /**
  * Servlet implementation class TeacherControler
  */
-@WebServlet("/TeacherControler")
+@WebServlet(name="TeacherControler", urlPatterns={"/TeacherControler"})
 public class TeacherControler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,14 +38,13 @@ public class TeacherControler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Account account = (Account) request.getSession().getAttribute("account");
-		if(account != null && (account.getType() == TAccount.TEACHER) ){
+		Teacher teacher = (Teacher) request.getSession().getAttribute("account");
 			List<ModuleDto> modules = this.serviceModule.getModules();
 	    	request.getSession().setAttribute("moduleList",new ArrayList<ModuleDto>(modules));
 	    	request.getRequestDispatcher("/teacher/index.jsp").forward(request, response);
-		}else{
-			request.getRequestDispatcher("/").forward(request, response);
-		} 	
+	    	if(request.getParameter("todo").equals("add_text")){
+	    		System.out.println(request.getParameter("text"));
+	    	}
 		
 	}
 

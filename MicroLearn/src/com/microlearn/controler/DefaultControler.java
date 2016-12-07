@@ -4,6 +4,7 @@ import java.io.IOException;
 
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,7 @@ import com.microlearn.entity.Student;
 /**
  * Servlet implementation class DefaultControler
  */
-@WebServlet("/DefaultControler")
+@WebServlet(name="DefaultControler", urlPatterns={"/DefaultControler"})
 public class DefaultControler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -42,61 +43,50 @@ public class DefaultControler extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String n_login = request.getParameter("login");
+		String n_password = (String) request.getParameter("password");
+		if ((n_login != null) && (n_password != null)) {
+			Teacher accT = serviceAccount.getTeacher(n_login, DigestUtils.sha256Hex(n_password));
+			if (accT != null) {
+				request.getSession().setAttribute("account", accT);
+				response.sendRedirect(request.getContextPath() + "/teacher");
+
+			} else {
+				Student accS = serviceAccount.getStudent(n_login, DigestUtils.sha256Hex(n_password));
+				if (accS != null) {
+					request.getSession().setAttribute("account", accS);
+					response.sendRedirect(request.getContextPath() + "/student");
+				} else {
+					response.sendRedirect(request.getContextPath());
+				}
+			}
+		}
+	}
+	
+	public void refresh(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Account account = (Account) request.getSession().getAttribute("account");
-		
-		switch( (request.getParameter("todo") !=null ) ? request.getParameter("todo") : "refresh" ){ 	
-    	
-		
-		case "log_in":
-			if(account == null){
-				String n_login = request.getParameter("login");
-				String n_password = (String)request.getParameter("password");
-				if((n_login != null) && (n_password != null)){
-					Teacher accT = serviceAccount.getTeacher(n_login, DigestUtils.sha256Hex(n_password));
-					if(accT != null){
-						request.getSession().setAttribute("account", accT);
-						request.getRequestDispatcher("/teacher").forward(request, response);
-						return;
-					}else{
-						Student accS = serviceAccount.getStudent(n_login, DigestUtils.sha256Hex(n_password));
-						if(accS != null){
-							request.getSession().setAttribute("account", accS);
-							request.getRequestDispatcher("/student").forward(request, response);
-							return;
-						}else{
-						request.getRequestDispatcher("login.jsp").forward(request, response);
-						return;
-						}
-					}	
-				}
-			}
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+		if(account == null){
+			//We are not log in and we try to access index page so we redirect user to the login page
+			request.getRequestDispatcher("/default/login.jsp").forward(request, response);
 			return;
-		case "refresh":
-			if(account == null){
-				//We are not log in and we try to access index page so we redirect user to the login page
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+		}else{
+			//redirect to student or teacher
+			switch(account.getType()){
+			case TAccount.STUDENT:
+				request.getRequestDispatcher("/student").forward(request, response);
 				return;
-			}else{
-				//redirect to student or teacher
-				switch(account.getType()){
-				case TAccount.STUDENT:
-					request.getRequestDispatcher("/student").forward(request, response);
-					return;
-				case TAccount.TEACHER:
-					request.getRequestDispatcher("/teacher").forward(request, response);
-					return;
-				// TODO : Admin ? lol TAccount.ADMIN
-				default:
-					//Why are we here  ? :p
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
-					return;
-				}
+			case TAccount.TEACHER:
+				request.getRequestDispatcher("/teacher").forward(request, response);
+				return;
+			// TODO : Admin ? lol TAccount.ADMIN
+			default:
+				//Why are we here  ? :p
+				request.getRequestDispatcher("/default/login.jsp").forward(request, response);
+				return;
 			}
-		default:
-			break;
 		}
 	}
 

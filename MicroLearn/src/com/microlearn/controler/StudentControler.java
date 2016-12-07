@@ -21,7 +21,7 @@ import com.microlearn.type.TAccount;
 /**
  * Servlet implementation class StudentControler
  */
-@WebServlet("/StudentControler")
+@WebServlet(name="StudentControler", urlPatterns={"/StudentControler"})
 public class StudentControler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -47,7 +47,7 @@ public class StudentControler extends HttpServlet {
 	    	request.getSession().setAttribute("moduleList",new ArrayList<ModuleDto>(modules));
 	    	request.getRequestDispatcher("/student/index.jsp").forward(request, response);
 		}else{
-			request.getRequestDispatcher("/").forward(request, response);
+			request.getRequestDispatcher("/default").forward(request, response);
 		} 	
 		
 	}

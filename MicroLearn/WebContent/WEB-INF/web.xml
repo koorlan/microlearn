@@ -4,13 +4,29 @@
   <welcome-file-list>
     <welcome-file>DefaultControler</welcome-file>
   </welcome-file-list>
+  
+  
+   <filter>
+       <filter-name>MicroLearnFilter</filter-name>
+       <filter-class>com.microlearn.filter.MicroLearnFilter</filter-class>
+    </filter>
+   
+    <!-- déclaration des URL interceptées par ce filtre -->
+    <filter-mapping>
+       <filter-name>MicroLearnFilter</filter-name>
+       <!-- on aurait pu aussi définir une servlet filtrée, par un élément servlet-name -->
+       <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  
+  
+  
   <servlet>
     <servlet-name>DefaultServlet</servlet-name>
     <servlet-class>com.microlearn.controler.DefaultControler</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>DefaultServlet</servlet-name>
-    <url-pattern></url-pattern>
+    <url-pattern>/default</url-pattern>
   </servlet-mapping>
   
   
