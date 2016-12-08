@@ -18,6 +18,7 @@ import com.microlearn.entity.Account;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Teacher;
+import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.entity.dto.TeacherDto;
 import com.microlearn.type.TAccount;
@@ -90,13 +91,44 @@ public class TeacherController extends HttpServlet {
 				}
 				break;
 			case "chapter_add":
-
+				if(request.getParameter("title")!=null && request.getParameter("content")!= null && request.getParameter("module_id")!= null){
+					String title = request.getParameter("title");
+					String content = request.getParameter("content");
+					int module_id = Integer.parseInt(request.getParameter("module_id"));			
+					int position = this.serviceModule.getModule(module_id).getChapters().size()+1;				
+					Chapter chapter = this.serviceChapter.createChapter(title, content, module_id, position);
+					request.setAttribute("chapter", this.serviceChapter.getChapter(chapter.getId()));
+					request.getRequestDispatcher("/teacher/chapter/view.jsp").forward(request, response);
+				}
 				break;
 			case "chapter_delete":
-
+				if(request.getParameter("id")!=null){
+					ChapterDto removed_chapter = null;
+					removed_chapter = this.serviceChapter.getChapter(Integer.parseInt(request.getParameter("id")));
+					if(removed_chapter != null && removed_chapter.getModule().getTeacher().getLogin().equals(teacher.getLogin())){
+						this.serviceChapter.delete(removed_chapter.getId());
+					}
+					ModuleDto module = this.serviceModule.getModule(removed_chapter.getModule().getId());
+					if(module.getTeacher().getLogin().equals(this.serviceAccount.getTeacher(teacher).getLogin())){
+						request.setAttribute("module",module);
+					}
+					request.getRequestDispatcher("/teacher/module/view.jsp").forward(request, response);
+					return;
+				}
 				break;
 			case "chapter_edit":
-
+				if(request.getParameter("title")!=null && request.getParameter("content")!= null && request.getParameter("id")!= null){
+					int id = Integer.parseInt(request.getParameter("id"));
+					ChapterDto modified_chapter = null;	
+					if(this.serviceChapter.updateTitle(id,request.getParameter("title")) && this.serviceChapter.updateContent(id,request.getParameter("content"))){
+						modified_chapter = this.serviceChapter.getChapter(id);
+						request.setAttribute("chapter", modified_chapter);
+						request.getRequestDispatcher("/teacher/chapter/view.jsp").forward(request, response);
+					}else{
+						this.goHome(request, response);
+					}
+					
+				}
 				break;
 			case "mct_add":
 
@@ -123,10 +155,14 @@ public class TeacherController extends HttpServlet {
 							break;
 						case "edit":
 							if(request.getParameter("id") !=null){
-								request.setAttribute("module", this.serviceModule.getModule(Integer.parseInt(request.getParameter("id"))));		
+								int id =Integer.parseInt(request.getParameter("id"));
+								ModuleDto module = this.serviceModule.getModule(id);
+								if(module.getTeacher().getLogin().equals(this.serviceAccount.getTeacher(teacher).getLogin())){
+									request.setAttribute("module",module);
+								}	
 							}
 							break;
-						case "add": //Keep thoses 2 lines (sort of filter for allowed action on module navigation -> else default and goHome Called otherwise let requestDispatcher to do the job)
+						case "add": //Keep thoses 2 lines (sort of filter for allowed action on navigation -> else default and goHome Called otherwise let requestDispatcher to do the job)
 							break;
 						default:
 							this.goHome(request, response);
@@ -137,14 +173,28 @@ public class TeacherController extends HttpServlet {
 						case "view":
 							if(request.getParameter("id") !=null){
 								int id =Integer.parseInt(request.getParameter("id"));
-								
+								ChapterDto chapter = this.serviceChapter.getChapter(id);
+								if(chapter.getModule().getTeacher().getLogin().equals(teacher.getLogin())){
+									request.setAttribute("chapter", chapter);
+								}
 							}
 							break;
 						case "add":
-							break;
-						case "delete":
+							if(request.getParameter("module_id") != null){
+								request.setAttribute("module_id", Integer.parseInt(request.getParameter("module_id")));
+							}else{
+								this.goHome(request, response);
+								return;
+							}
 							break;
 						case "edit":
+							if(request.getParameter("id") !=null){
+								int id =Integer.parseInt(request.getParameter("id"));
+								ChapterDto chapter = this.serviceChapter.getChapter(id);
+								if(chapter.getModule().getTeacher().getLogin().equals(teacher.getLogin())){
+									request.setAttribute("chapter", chapter);
+								}
+							}
 							break;
 						default:
 							this.goHome(request, response);

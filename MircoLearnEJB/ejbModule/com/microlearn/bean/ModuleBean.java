@@ -36,7 +36,7 @@ public class ModuleBean {
 	public ModuleDto getModule(int id) {
 		try {
 			Module module = em.find(Module.class, id);
-			return new ModuleDto(module.getId(),module.getChapters(), module.getTitle(),module.getTitle(),module.getTeacher());
+			return new ModuleDto(module.getId(),module.getChapters(), module.getTitle(),module.getContent(),module.getTeacher());
 		}
 		catch(IllegalArgumentException e) {
 			return null;

@@ -36,12 +36,32 @@
 	<br>
 
 
-	<h1>Teacher Page</h1>
+<h1>Add Chapter</h1>
 
-
-
-	<div class="row"></div>
-
+	<div class="row">
+	<div class="medium-6 medium-centered large-6 large-centered columns">
+			<div class="row column">
+				<form action="TeacherController">
+				<h4 class="text-center">Add Chapter</h4>
+				<div class="large-12 columns">
+				<div class="input text">
+					<label for="username">Title</label>
+					<input placeholder="title..." type="text" name="title"/>
+				</div>
+				</div>
+				 <div class="large-12 columns">
+              		<label>Description</label>
+             			 <textarea name="content" placeholder="short description..."></textarea>
+          		  </div>
+          		  <div class="large-12 columns">
+          			<input type="hidden" name="module_id" value="${module_id}">
+          		   <button class="button expanded" type="submit" name="todo" value="chapter_add">Create</button>
+          		  
+          		  </div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>
 	<script src="${root}/foundation/js/vendor/what-input.js"></script>

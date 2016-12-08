@@ -11,27 +11,28 @@
 <title>View Chapter - MicroLearn</title>
 <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
 <link rel="stylesheet" href="${root}/foundation/css/app.css">
-<link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
+<link rel="stylesheet"
+	href="${root}/foundation/font-awesome/css/font-awesome.css">
 </head>
 <body>
 
-<div class="top-bar">
-     <div class="top-bar-left">
-        <ul class="menu" data-dropdown-menu>
-          <li class="menu-text">MicroLearn</li>
-          <li>
-          <a href="${pageContext.request.contextPath}"><i class="fa fa-home fa-lg"></i></a>	
-		</li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="menu">
-          <li>Hello ${account.firstName}  ${account.lastName}</li>
-          <li><a href="#">(manage)</a></li>
-          <li> <a class="alert button float-right" href="${pageContext.request.contextPath}/DefaultController?&todo=log_out">Disconnect</a></li>
-        </ul>
-      </div>
-    </div>
+	<div class="top-bar">
+		<div class="top-bar-left">
+			<ul class="menu" data-dropdown-menu>
+				<li class="menu-text">MicroLearn</li>
+				<li><a href="${pageContext.request.contextPath}"><i
+						class="fa fa-home fa-lg"></i></a></li>
+			</ul>
+		</div>
+		<div class="top-bar-right">
+			<ul class="menu">
+				<li>Hello ${account.firstName} ${account.lastName}</li>
+				<li><a href="#">(manage)</a></li>
+				<li><a class="alert button float-right"
+					href="${pageContext.request.contextPath}/DefaultController?&todo=log_out">Disconnect</a></li>
+			</ul>
+		</div>
+	</div>
 
 	<br>
 
@@ -39,8 +40,18 @@
 	<h1>Teacher Page</h1>
 
 
+	${chapter.title} 
+	${chapter.content}
 
-	<div class="row"></div>
+	<div class="row">
+
+		<div class="large-4 medium-4 columns">
+			<a class="button float-right"
+				href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
+			<a class="alert button float-right"
+				href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
+		</div>
+	</div>
 
 
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>
