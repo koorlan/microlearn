@@ -47,6 +47,7 @@
 				<div class="input text"><label for="username">Username</label><input type="text" name="login" value="Login" /></div>
 				<div class="input password"><label for="password">Password</label><input
 						type="password" name="password" value="Password" /></div>
+						
         		  <button class="button expanded" type="submit" name="todo" value="log_in">log in</button>
 				
 

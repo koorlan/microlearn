@@ -54,7 +54,10 @@ public class TeacherController extends HttpServlet {
 
 				break;
 			case "module_edit":
-
+				if(request.getParameter("title")!=null && request.getParameter("content")!= null && request.getParameter("id")!= null){
+					//TODO : getModuleById and modify 
+					this.goHome(request, response);
+				}
 				break;
 			case "chapter_add":
 
@@ -91,6 +94,11 @@ public class TeacherController extends HttpServlet {
 						case "delete":
 							break;
 						case "edit":
+							List<ModuleDto> modules2 = this.serviceModule.getModules();
+							for(ModuleDto m : modules2){
+								if(m.getId() == Integer.parseInt(request.getParameter("id")))
+									request.getSession().setAttribute("module", m);
+							}
 							break;
 						default:
 							this.goHome(request, response);
