@@ -12,7 +12,7 @@ public class StudentDto extends AccountDto {
 		super(login, firstName, lastName);
 		this.modules = new ArrayList<ModuleDto>();
 		for(Module module : modules)
-			this.modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+			this.modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent(),module.getTeacher()));
 	}
 	
 	public List<ModuleDto> getModules() {

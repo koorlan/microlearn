@@ -7,9 +7,11 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
@@ -31,10 +33,10 @@ public class ModuleBean {
 		return module;
 	}
 	
-	public Module getModule(int id) {
+	public ModuleDto getModule(int id) {
 		try {
 			Module module = em.find(Module.class, id);
-			return module;
+			return new ModuleDto(module.getId(),module.getChapters(), module.getTitle(),module.getTitle(),module.getTeacher());
 		}
 		catch(IllegalArgumentException e) {
 			return null;
@@ -54,20 +56,42 @@ public class ModuleBean {
 	public boolean delete(int moduleId) {
 		return delete(em.find(Module.class, moduleId));
 	}
+
+	public boolean updateTitle(int id, String title){
+		try{
+			Module module = em.find(Module.class, id);
+			module.setTitle(title);
+			return true;
+		}
+		catch (PersistenceException e) {
+			return false;
+		}
+	}
+	
+	public boolean updateContent(int id, String content){
+		try{
+			Module module = em.find(Module.class, id);
+			module.setContent(content);
+			return true;
+		}
+		catch (PersistenceException e) {
+			return false;
+		}
+	}
 	
 	public List<ModuleDto> getModules() {
 		List<Module> list = em.createQuery("Select m FROM Module m", Module.class).getResultList();
 		
 		List<ModuleDto> modules = new ArrayList<ModuleDto>();
 		for(Module module : list) {
-			modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+			modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent(), module.getTeacher()));
 		}
 		return modules;
 	}
 	
 	public void subscribe(int moduleId, String studentLogin) {		
 		Student student = (Student) em.find(Account.class, studentLogin);
-		Module module = getModule(moduleId);
+		Module module =  em.find(Module.class, moduleId);
 		
 		if(module != null && student != null) {
 			student.getFollowedModules().add(module);

@@ -11,7 +11,7 @@ public class Module {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToMany(mappedBy="module")
+	@OneToMany(mappedBy="module", fetch = FetchType.EAGER,cascade=CascadeType.REMOVE)
 	private List<Chapter> chapters;
 	
 	@ManyToOne
@@ -22,7 +22,7 @@ public class Module {
 	
 	private String title;
 	private String content;
-		
+
 	public int getId() {
 		return id;
 	}

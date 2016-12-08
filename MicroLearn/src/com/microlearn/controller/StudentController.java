@@ -68,7 +68,7 @@ public class StudentController extends HttpServlet {
 			switch(request.getParameter("action")) {
 			case "view":
 				if(request.getParameter("id") != null) {
-					Module module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
+					ModuleDto module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
 					request.setAttribute("module", module);
 				}
 				break;
@@ -78,7 +78,7 @@ public class StudentController extends HttpServlet {
 					serviceModule.subscribe(moduleId, ((Account)request.getSession().getAttribute("account")).getLogin());
 				}
 				goHome(request, response);
-				break;
+				return;
 			default:
 				this.goHome(request, response);
 			}
