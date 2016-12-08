@@ -28,7 +28,7 @@
         <ul class="menu">
           <li>Hello ${account.firstName}  ${account.lastName}</li>
           <li><a href="#">(manage)</a></li>
-          <li> <a class="alert button float-right" href=${root}/DefaultController?&todo=log_out">Disconnect</a></li>
+          <li> <a class="alert button float-right" href="${root}/DefaultController?&todo=log_out">Disconnect</a></li>
         </ul>
       </div>
     </div>

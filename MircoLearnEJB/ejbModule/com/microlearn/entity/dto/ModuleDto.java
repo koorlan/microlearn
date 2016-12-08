@@ -1,29 +1,37 @@
 package com.microlearn.entity.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 import com.microlearn.entity.Chapter;
+import com.microlearn.entity.Module;
+import com.microlearn.entity.Teacher;
 
 public class ModuleDto {
 	
-	private long id;
-	private List<Chapter> chapters;	
+	private int id;
+	private List<ChapterDto> chapters;	
 	private String title;
 	private String content;
+	private Teacher teacher;
 	
-	public ModuleDto(long id, List<Chapter> chapters, String title, String content) {
+	public ModuleDto(int id, List<Chapter> chapters, String title, String content, Teacher teacher) {
 		super();
 		this.id = id;
-		this.chapters = chapters;
+		this.chapters = new ArrayList<ChapterDto>();
+		for(Chapter c: chapters){
+			this.chapters.add(new ChapterDto(c.getId(),c.getModule(),c.getTitle(),c.getContent(),c.getPosition()));
+		}
 		this.title = title;
 		this.content = content;
+		this.teacher = teacher;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public List<Chapter> getChapters() {
+	public List<ChapterDto> getChapters() {
 		return chapters;
 	}
 	public String getTitle() {
@@ -31,6 +39,10 @@ public class ModuleDto {
 	}
 	public String getContent() {
 		return content;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
 	}
 	
 	
