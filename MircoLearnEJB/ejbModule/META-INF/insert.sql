@@ -26,3 +26,23 @@ VALUES (0, 'chapter0', 'content0', 0,1),
 (6, 'chapter6', 'content',0,6),
 (7, 'chapter7', 'content',0,7),
 (8, 'chapter8', 'content',0,8);
+
+
+INSERT INTO MCT (id, successcondition, chapter_id)
+VALUES 
+(1, 2, 0);
+
+INSERT INTO QUESTION (id, questiontext, mct_id)
+VALUES 
+(1, 'How are you ?', 1),
+(2, 'What is your name ?', 1);
+
+INSERT INTO QUESTION_BADANSWERS (question_id, badanswers)
+VALUES 
+(1, 'I am bad'),
+(2, 'Roger');
+
+INSERT INTO QUESTION_GOODANSWERS (question_id, goodanswers)
+VALUES 
+(1, 'I am good'),
+(2, 'Anthony');

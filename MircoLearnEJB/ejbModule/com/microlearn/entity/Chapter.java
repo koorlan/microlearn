@@ -12,6 +12,9 @@ public class Chapter {
 	@ManyToOne
 	private Module module;
 	
+	@OneToOne
+	private MultipleChoiceTest mct;
+	
 	private String title;
 	private String content;
 	private int position;
