@@ -3,9 +3,7 @@ package com.microlearn.entity.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.microlearn.entity.Chapter;
-import com.microlearn.entity.Module;
 import com.microlearn.entity.Teacher;
 
 public class ModuleDto {
@@ -21,7 +19,7 @@ public class ModuleDto {
 		this.id = id;
 		this.chapters = new ArrayList<ChapterDto>();
 		for(Chapter c: chapters){
-			this.chapters.add(new ChapterDto(c.getId(),c.getModule(),c.getTitle(),c.getContent(),c.getPosition()));
+			this.chapters.add(new ChapterDto(c.getId(),c.getModule(),c.getTitle(),c.getContent(),c.getPosition(), c.getMct()));
 		}
 		this.title = title;
 		this.content = content;

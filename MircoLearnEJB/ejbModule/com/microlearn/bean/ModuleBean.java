@@ -15,6 +15,8 @@ import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
+import com.microlearn.entity.dto.AttemptDto;
+import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
 
 @LocalBean
@@ -97,5 +99,23 @@ public class ModuleBean {
 			student.getFollowedModules().add(module);
 			module.getFollowers().add(student);
 		}
+	}
+	
+	public int getLastSuccess(int moduleId, String studentLogin) {
+		ModuleDto module = getModule(moduleId);
+		int lastSuccess = -1;
+		// Chapters are already sorted
+		for(ChapterDto chapter : module.getChapters()) {
+			if(chapter.getMct() == null) {
+				break;
+			}				
+			for(AttemptDto attempt : chapter.getMct().getAttempts()) {
+				if(attempt.isSuccess() && attempt.getUserLogin().equals(studentLogin)) {
+					// MCT for the current chapter has been completed
+					lastSuccess = chapter.getPosition();
+				}
+			}
+		}
+		return lastSuccess;
 	}
 }

@@ -16,6 +16,7 @@ import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
+import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.entity.dto.StudentDto;
 
@@ -63,13 +64,17 @@ public class StudentController extends HttpServlet {
 	}
 	
 	private void naviguate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Student student =  (Student) request.getSession().getAttribute("account");
 		switch(request.getParameter("entity")){
 		case "module":
 			switch(request.getParameter("action")) {
 			case "view":
 				if(request.getParameter("id") != null) {
 					ModuleDto module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
+					int lastSuccess = serviceModule.getLastSuccess(module.getId(), student.getLogin());
+					System.out.println(String.valueOf(lastSuccess));
 					request.setAttribute("module", module);
+					request.setAttribute("lastSuccess", lastSuccess);
 				}
 				break;
 			case "subscribe":

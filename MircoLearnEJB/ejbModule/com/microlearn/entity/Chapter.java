@@ -12,7 +12,7 @@ public class Chapter {
 	@ManyToOne
 	private Module module;
 	
-	@OneToOne
+	@OneToOne(mappedBy="chapter")
 	private MultipleChoiceTest mct;
 	
 	private String title;
@@ -50,6 +50,10 @@ public class Chapter {
 	public void setPosition(int position) {
 		this.position = position;
 	}
-
-	
+	public MultipleChoiceTest getMct() {
+		return mct;
+	}
+	public void setMct(MultipleChoiceTest mct) {
+		this.mct = mct;
+	}
 }

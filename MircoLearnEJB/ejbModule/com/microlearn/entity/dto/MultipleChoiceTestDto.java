@@ -22,7 +22,8 @@ public class MultipleChoiceTestDto {
 		}
 		this.attempts = new ArrayList<AttemptDto>();
 		for(Attempt attempt : attempts) {
-			this.attempts.add(new AttemptDto(attempt.getId(), attempt.getDate(), attempt.isSuccess()));
+			this.attempts.add(new AttemptDto(attempt.getId(), attempt.getDate(), attempt.isSuccess(), 
+					attempt.getStudent().getLogin()));
 		}
 	}
 
