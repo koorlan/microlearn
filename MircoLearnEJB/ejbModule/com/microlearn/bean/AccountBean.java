@@ -12,6 +12,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
+import com.microlearn.entity.dto.StudentDto;
+import com.microlearn.entity.dto.TeacherDto;
 import com.microlearn.type.TAccount;
 
 @LocalBean
@@ -32,6 +34,20 @@ public class AccountBean {
 			if(acc.getPassword().equals(pwd))
 				return acc;
 		}
+		return null;
+	}
+	
+	public TeacherDto getTeacher(Account acc) {
+		Teacher t = (Teacher) em.find(Account.class, acc.getLogin());
+		if(t != null)
+			return new TeacherDto(t.getLogin(), t.getFirstName(), t.getLastName(), t.getModules());
+		return null;
+	}
+	
+	public StudentDto getStudent(Account acc) {
+		Student s = (Student) em.find(Account.class, acc.getLogin());
+		if(s != null)
+			return new StudentDto(s.getLogin(), s.getFirstName(), s.getLastName(), s.getModules());
 		return null;
 	}
 	

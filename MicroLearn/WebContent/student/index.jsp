@@ -29,12 +29,12 @@
 		</div>
 		<div class="large-6 columns">
 			<h2>My modules</h2>
-			<!-- <ul>
-				<c:forEach items="${myModules}" var="module">
+			<ul>
+				<c:forEach items="${student.modules}" var="module">
 					<li>${module.title}</li>
 					<li>${module.content}</li>
 				</c:forEach>
-			</ul> -->
+			</ul>
 		</div>
 	</div>
 

@@ -18,6 +18,7 @@ import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
+import com.microlearn.entity.dto.StudentDto;
 import com.microlearn.type.TAccount;
 
 /**
@@ -103,14 +104,13 @@ public class StudentController extends HttpServlet {
 	}
 
 	public void goHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Student student = (Student) request.getSession().getAttribute("account");
+		StudentDto student = serviceAccount.getStudent((Account)request.getSession().getAttribute("account"));
 		if(student != null)
 		{
 			List<ModuleDto> modules = this.serviceModule.getModules();
 			request.getSession().setAttribute("moduleList", new ArrayList<ModuleDto>(modules));
 			
-			// List<ModuleDto> myModules = serviceModule.getModulesByStudent(student);
-			// request.setAttribute("myModules", myModules);
+			request.setAttribute("student", student);
 
 			request.getRequestDispatcher("/student/index.jsp").forward(request, response);
 		}
