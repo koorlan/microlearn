@@ -40,6 +40,30 @@
 	<h2>${module.title}</h2>
 	<h3>${module.content}</h3>
 
+<div class="row">
+        <div class="large-8 columns large-offset-2 medium-8 medium-offset-2">
+			<a class="button" href="${root}/TeacherController?&todo=navigate&entity=chapter&action=add" >New Chapter</a>
+			
+			<c:forEach items="${module.chapters}" var="chapter">
+				
+			<div class="row callout">
+                  <div class="large-4 medium-4 columns clearfix">
+                    <a href="${root}/TeacherController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
+                    <br>
+                    Description : ${chapter.content}
+                  </div>
+
+                  <div class="large-4 medium-4 columns">
+                    <a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
+                    <a class="alert button float-right" href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
+                  </div>
+            </div>
+			
+		</c:forEach>
+</div>
+</div>
+
+
 	<div class="row">
 	<a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
      <a class="alert button float-right" href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>

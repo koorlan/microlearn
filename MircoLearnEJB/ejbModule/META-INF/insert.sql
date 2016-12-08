@@ -16,7 +16,7 @@ VALUES
 (6, 'Module6', 'content6', 'korlan2t'),
 (7, 'Module7', 'content7', 'korlan2t');
 
-INSERT INTO CHAPTER (id, title, content, module_id) 
-VALUES (0, 'chapter0', 'content0', 0),
-(1, 'chapter1', 'content1',0),
-(2, 'chapter2', 'content2',1);
+INSERT INTO CHAPTER (id, title, content, module_id,position) 
+VALUES (0, 'chapter0', 'content0', 0,1),
+(1, 'chapter1', 'content1',0,2),
+(2, 'chapter2', 'content2',1,1);

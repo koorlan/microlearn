@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
@@ -109,12 +110,11 @@ public class TeacherController extends HttpServlet {
 						switch(request.getParameter("action")){
 						case "view":
 							if(request.getParameter("id") !=null){
-								for(Module module : this.serviceAccount.getTeacher(teacher).getModules()){
-									if(module.getId() == Integer.parseInt(request.getParameter("id"))){
-										request.setAttribute("module", new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
-										break;
-									}			
-								}			
+								int id =Integer.parseInt(request.getParameter("id"));
+								Module module = this.serviceModule.getModule(id);
+								if(module.getTeacher().getLogin().equals(this.serviceAccount.getTeacher(teacher).getLogin())){
+									request.setAttribute("module",module);
+								}
 							}
 							break;
 						case "edit":
