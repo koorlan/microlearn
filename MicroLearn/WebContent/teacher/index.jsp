@@ -42,7 +42,7 @@
 
 <div class="row">
         <div class="large-8 columns large-offset-2 medium-8 medium-offset-2">
-			<a class="button" href="$${root}/TeacherController?&todo=navigate&entity=module&action=add" >New Module</a>
+			<a class="button" href="${root}/TeacherController?&todo=navigate&entity=module&action=add" >New Module</a>
 			
 			<c:forEach items="${moduleList}" var="module">
 				
