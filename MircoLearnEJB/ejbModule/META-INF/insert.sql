@@ -18,17 +18,14 @@ VALUES
 
 INSERT INTO CHAPTER (id, title, content, module_id,position) 
 VALUES
-(1, 'La modularite des ondes dans l espace', 
-'## Partie1 : La succubation de l emmental'
-,0,2),
-(2, 'chapter2', 'content2',1,1),
-(5, 'chapter5', 'content',0,3),
+(1, 'La modularite des ondes dans l espace', '## Partie1 : La succubation de l emmental',0,1),
+(2, 'chapter2', 'content2',0,2),
+(3, 'chapter3', 'content',0,3),
 (4, 'chapter4', 'content',0,4),
-(3, 'chapter3', 'content',0,5),
+(5, 'chapter5', 'content',0,5),
 (6, 'chapter6', 'content',0,6),
 (7, 'chapter7', 'content',0,7),
 (8, 'chapter8', 'content',0,8);
-(2, 'chapter2', 'content2',1,1);
 
 INSERT INTO MCT (id, successcondition, chapter_id)
 VALUES 
