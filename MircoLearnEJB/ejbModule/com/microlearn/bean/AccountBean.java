@@ -39,6 +39,7 @@ public class AccountBean {
 	
 	public TeacherDto getTeacher(Account acc) {
 		Teacher t = (Teacher) em.find(Account.class, acc.getLogin());
+				
 		if(t != null)
 			return new TeacherDto(t.getLogin(), t.getFirstName(), t.getLastName(), t.getModules());
 		return null;
