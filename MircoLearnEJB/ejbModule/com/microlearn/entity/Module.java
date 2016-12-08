@@ -9,7 +9,7 @@ public class Module {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	
 	@OneToMany(mappedBy="module")
 	private List<Chapter> chapters;
@@ -17,15 +17,16 @@ public class Module {
 	@ManyToOne
 	private Teacher teacher;
 	
+	@ManyToMany(mappedBy="followedModules")
+	private List<Student> followers;
+	
 	private String title;
 	private String content;
-	
-	
-	
-	public long getId() {
+		
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public List<Chapter> getChapters() {
@@ -52,7 +53,10 @@ public class Module {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-	
-	
-	
+	public List<Student> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(List<Student> followers) {
+		this.followers = followers;
+	}	
 }

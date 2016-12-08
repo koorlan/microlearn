@@ -12,15 +12,16 @@ import javax.persistence.*;
 @DiscriminatorValue(com.microlearn.type.TAccount.STUDENT)
 public class Student extends Account {
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	private List<Module> modules;
+	@ManyToMany
+	@JoinTable(name="FOLLOWING")
+	private List<Module> followedModules;
 
-	public List<Module> getModules() {
-		return modules;
+	public List<Module> getFollowedModules() {
+		return followedModules;
 	}
 
-	public void setModules(List<Module> modules) {
-		this.modules = modules;
+	public void setFollowedModules(List<Module> modules) {
+		this.followedModules = modules;
 	}
 	
 }

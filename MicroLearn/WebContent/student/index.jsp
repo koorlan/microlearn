@@ -21,9 +21,19 @@
 		<div class="large-6 columns">
 			<h2>All modules</h2>
 			<ul>
-				<c:forEach items="${moduleList}" var="module">
-					<li>${module.title}</li>
-					<li>${module.content}</li>
+				<c:forEach items="${modules}" var="module">
+					<div class="row callout">
+	                  <div class="large-4 medium-4 columns clearfix">
+	                    <a href="${root}/TeacherController?&todo=navigate&entity=module&action=view&id=${module.id}">${module.title}</a>
+	                    <br>
+	                    Description : ${module.content}
+	                  </div>
+	                   <div class="large-4 medium-4 columns clearfix">
+	                  </div>
+	                  <div class="large-4 medium-4 columns">
+	                    <a class="button float-right" href="${root}/StudentController?&todo=navigate&entity=module&action=subscribe&id=${module.id}">Subscribe</a>
+	                  </div>
+	            	</div>
 				</c:forEach>
 			</ul>
 		</div>
@@ -31,8 +41,18 @@
 			<h2>My modules</h2>
 			<ul>
 				<c:forEach items="${student.modules}" var="module">
-					<li>${module.title}</li>
-					<li>${module.content}</li>
+					<div class="row callout">
+	                  <div class="large-4 medium-4 columns clearfix">
+	                    <a href="${root}/StudentController?&todo=navigate&entity=module&action=view&id=${module.id}">${module.title}</a>
+	                    <br>
+	                    Description : ${module.content}
+	                  </div>
+	                   <div class="large-4 medium-4 columns clearfix">
+	                  </div>
+	                  <div class="large-4 medium-4 columns">
+	                    <a class="button float-right" href="${root}/StudentController?&todo=navigate&entity=module&action=view&id=${module.id}">Work on it!</a>
+	                  </div>
+	            	</div>
 				</c:forEach>
 			</ul>
 		</div>
