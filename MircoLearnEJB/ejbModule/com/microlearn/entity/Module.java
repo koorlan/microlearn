@@ -9,9 +9,9 @@ public class Module {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	
-	@OneToMany(mappedBy="module")
+	@OneToMany(mappedBy="module", fetch = FetchType.EAGER)
 	private List<Chapter> chapters;
 	
 	@ManyToOne
@@ -22,10 +22,10 @@ public class Module {
 	
 	
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public List<Chapter> getChapters() {

@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Chapter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	
 	@ManyToOne
 	private Module module;
@@ -17,10 +17,10 @@ public class Chapter {
 	private int position;
 	
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public Module getModule() {

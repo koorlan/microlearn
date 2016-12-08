@@ -7,6 +7,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
 import com.microlearn.entity.Module;
@@ -52,6 +53,28 @@ public class ModuleBean {
 	
 	public boolean delete(int moduleId) {
 		return delete(em.find(Module.class, moduleId));
+	}
+
+	public boolean updateTitle(int id, String title){
+		try{
+			Module module = em.find(Module.class, id);
+			module.setTitle(title);
+			return true;
+		}
+		catch (PersistenceException e) {
+			return false;
+		}
+	}
+	
+	public boolean updateContent(int id, String content){
+		try{
+			Module module = em.find(Module.class, id);
+			module.setContent(content);
+			return true;
+		}
+		catch (PersistenceException e) {
+			return false;
+		}
 	}
 	
 	public List<ModuleDto> getModules() {
