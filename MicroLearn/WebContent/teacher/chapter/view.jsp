@@ -39,26 +39,58 @@
 
 	<h1>Teacher Page</h1>
 
+<div id='outEle'>
 
-	${chapter.title} 
-	${chapter.content}
-
+</div>
 	<div class="row">
 
+		<div class="large-10 medium-10 columns">
+		<div class="large-8 medium-8 columns">
+		<div id='titleOUT'></div>
+		</div>
 		<div class="large-4 medium-4 columns">
-			<a class="button float-right"
+			<a class="button"
 				href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
-			<a class="alert button float-right"
+			<a class="alert button "
 				href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
 		</div>
+		</div>
 	</div>
+	<div class="row">
+		<div id='contentOUT'></div>
+	</div>
+
+<div id='titleMD'>
+<!--
+# ${chapter.title}
+ -->
+</div>
+
+<div id='contentMD'>
+<!--
+${chapter.content}
+ -->
+</div>
+
+	
 
 
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>
 	<script src="${root}/foundation/js/vendor/what-input.js"></script>
 	<script src="${root}/foundation/js/vendor/foundation.js"></script>
 	<script src="${root}/foundation/js/app.js"></script>
+	<script src="${root}/foundation/micromarkdown.min.js"></script>
+	<script type="text/javascript">
+		window.onload = function() {
+ 		otitle = document.getElementById('titleOUT');
+  		ititle = document.getElementById('titleMD').innerHTML.split('<!--')[1].split('-->')[0];
+  		otitle.innerHTML = micromarkdown.parse(ititle);
 
+  		ocont = document.getElementById('contentOUT');
+  		icont = document.getElementById('contentMD').innerHTML.split('<!--')[1].split('-->')[0];
+  		ocont.innerHTML = micromarkdown.parse(icont);
+	}
 
+	</script>
 </body>
 </html>
