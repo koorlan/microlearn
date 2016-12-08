@@ -1,13 +1,11 @@
 package com.microlearn.entity.dto;
 
-
-
 import com.microlearn.entity.Module;
 import com.microlearn.entity.MultipleChoiceTest;
 
 public class ChapterDto {
 
-	private int id;	
+	private int id;
 	private Module module;
 	private MultipleChoiceTestDto mct;
 	private String title;
@@ -45,6 +43,19 @@ public class ChapterDto {
 	
 	public int getPosition() {
 		return position;
+	}
+
+	public int compareTo(ChapterDto a) {
+		final int BEFORE = -1;
+	    final int EQUAL = 0;
+	    final int AFTER = 1;
+	    if(this.position == a.position)
+	    	return EQUAL;
+	    if(this.position > a.position)
+	    	return BEFORE;
+	    if(this.position < a.position)
+	    	return AFTER;    
+		return AFTER;    
 	}
 	
 	public MultipleChoiceTestDto getMct() {

@@ -1,6 +1,8 @@
 package com.microlearn.entity.dto;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.microlearn.entity.Chapter;
@@ -30,6 +32,10 @@ public class ModuleDto {
 		return id;
 	}
 	public List<ChapterDto> getChapters() {
+		Comparator<ChapterDto> comp = (ChapterDto a, ChapterDto b) -> {
+		    return b.compareTo(a);
+		};
+		Collections.sort(this.chapters, comp);
 		return chapters;
 	}
 	public String getTitle() {

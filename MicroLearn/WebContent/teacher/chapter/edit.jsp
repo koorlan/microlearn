@@ -37,24 +37,27 @@
 	<br>
 
 
-	<div class="row">
-	<div class="medium-6 medium-centered large-6 large-centered columns">
+<div class="row">
+		<div class="medium-6 medium-centered large-6 large-centered columns">
 			<div class="row column">
 				<form action="TeacherController">
-				<h4 class="text-center">Edit Module</h4>
-				<div class="large-12 columns">
-				<div class="input text">
-					<label for="username">Title</label>
-					<input placeholder="title..." type="text" name="login"/>
-				</div>
-				</div>
-				 <div class="large-12 columns">
-              		<label>Description</label>
-             			 <textarea placeholder="short description..."></textarea>
-          		  </div>
-          		  <div class="large-12 columns">
-          		  <a class="button expanded" href="${pageContext.request.contextPath}/TeacherController?&todo=module_edit&id=${module.id}">Edit</a>
-          		  </div>
+					<h4 class="text-center">Edit Chapter</h4>
+					<div class="large-12 columns">
+						<div class="input text">
+							<label for="username">Title</label> <input placeholder="title..."
+								type="text" name="title" value="${chapter.title}" />
+						</div>
+					</div>
+					<div class="large-12 columns">
+						<label>Description</label>
+						<textarea name="content" placeholder="short description..."
+							>${chapter.content}</textarea>
+					</div>
+					<input type="hidden" name="id" value="${chapter.id}">
+					<div class="large-12 columns">
+						<button class="button expanded" type="submit" name="todo"
+							value="chapter_edit">Edit</button>
+					</div>
 				</form>
 			</div>
 		</div>
