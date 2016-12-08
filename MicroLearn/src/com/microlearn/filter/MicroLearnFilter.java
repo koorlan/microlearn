@@ -31,20 +31,31 @@ public  class MicroLearnFilter  implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         HttpSession session = request.getSession();
+        String path = ((HttpServletRequest) request).getRequestURI();
+        
+        //allow css, js and custom jsp
+        if (path.startsWith(request.getContextPath()+"/foundation")) {
+            chain.doFilter(request, response);
+          return;
+        }
 
         Account account = (Account) session.getAttribute("account");
         if ( account == null ) {
         	String todo = (String) request.getParameter("todo");
-        	if(todo != null && todo.equals("log_in")){
-        		//request.getRequestDispatcher("/default").forward(request, response);
-        		chain.doFilter(request, response);
+        	if(todo != null && todo.equals("log_in") ){
+        		request.getRequestDispatcher("/default").forward(request, response);
+        		//chain.doFilter(request, response);
         		return;
         	}else{
         		request.getRequestDispatcher("/default/login.jsp").forward(request, response);
         		return;
         	}   	
         } else {
-        	switch(account.getType()){
+        	String todo = (String) request.getParameter("todo");
+        	if(todo != null && todo.equals("log_out")){
+        		request.getRequestDispatcher("/default").forward(request, response);
+        	}else{
+        		switch(account.getType()){
 				case TAccount.STUDENT:
 					request.getRequestDispatcher("/student").forward(request, response);
 					return;
@@ -56,7 +67,9 @@ public  class MicroLearnFilter  implements Filter {
 					//Why are we here  ? :p
 					request.getRequestDispatcher("/default/login.jsp").forward(request, response);
 					return;
-			}
+        		}
+        	}
+        	
         }
 		
 	}
