@@ -26,7 +26,7 @@ VALUES (0, 'chapter0', 'content0', 0,1),
 (6, 'chapter6', 'content',0,6),
 (7, 'chapter7', 'content',0,7),
 (8, 'chapter8', 'content',0,8);
-
+(2, 'chapter2', 'content2',1,1);
 
 INSERT INTO MCT (id, successcondition, chapter_id)
 VALUES 
