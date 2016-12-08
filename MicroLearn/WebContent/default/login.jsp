@@ -45,9 +45,9 @@
 				<form action="DefaultController">
 				<h4 class="text-center">MicroLearn Log In</h4>
 				
-				<div class="input text"><label for="username">Username</label><input type="text" name="login" value="Login" /></div>
+				<div class="input text"><label for="username">Username</label><input type="text" name="login" placeholder="Login" /></div>
 				<div class="input password"><label for="password">Password</label><input
-						type="password" name="password" value="Password" /></div>
+						type="password" name="password" placeholder="Password" /></div>
 						
         		  <button class="button expanded" type="submit" name="todo" value="log_in">log in</button>
 				

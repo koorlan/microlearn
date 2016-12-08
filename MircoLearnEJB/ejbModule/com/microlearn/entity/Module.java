@@ -17,11 +17,12 @@ public class Module {
 	@ManyToOne
 	private Teacher teacher;
 	
+	@ManyToMany(mappedBy="followedModules")
+	private List<Student> followers;
+	
 	private String title;
 	private String content;
-	
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -52,7 +53,10 @@ public class Module {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-	
-	
-	
+	public List<Student> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(List<Student> followers) {
+		this.followers = followers;
+	}	
 }

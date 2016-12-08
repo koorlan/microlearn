@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
+import com.microlearn.entity.Account;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
@@ -85,5 +86,15 @@ public class ModuleBean {
 			modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
 		}
 		return modules;
+	}
+	
+	public void subscribe(int moduleId, String studentLogin) {		
+		Student student = (Student) em.find(Account.class, studentLogin);
+		Module module = getModule(moduleId);
+		
+		if(module != null && student != null) {
+			student.getFollowedModules().add(module);
+			module.getFollowers().add(student);
+		}
 	}
 }

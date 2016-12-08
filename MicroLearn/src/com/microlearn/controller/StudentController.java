@@ -16,10 +16,8 @@ import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
-import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.entity.dto.StudentDto;
-import com.microlearn.type.TAccount;
 
 /**
  * Servlet implementation class StudentControler
@@ -71,8 +69,15 @@ public class StudentController extends HttpServlet {
 			case "view":
 				if(request.getParameter("id") != null) {
 					Module module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
-					request.getSession().setAttribute("module", module);
+					request.setAttribute("module", module);
 				}
+				break;
+			case "subscribe":
+				if(request.getParameter("id") != null) {
+					int moduleId = Integer.parseInt(request.getParameter("id"));
+					serviceModule.subscribe(moduleId, ((Account)request.getSession().getAttribute("account")).getLogin());
+				}
+				goHome(request, response);
 				break;
 			default:
 				this.goHome(request, response);
@@ -107,9 +112,19 @@ public class StudentController extends HttpServlet {
 		StudentDto student = serviceAccount.getStudent((Account)request.getSession().getAttribute("account"));
 		if(student != null)
 		{
-			List<ModuleDto> modules = this.serviceModule.getModules();
-			request.getSession().setAttribute("moduleList", new ArrayList<ModuleDto>(modules));
+			List<ModuleDto> modules = serviceModule.getModules();
+			List<ModuleDto> toRemove = new ArrayList<ModuleDto>();
+			for(ModuleDto module : modules) {
+				for(ModuleDto mine : student.getModules()) {
+					if(module.getId() == mine.getId()) {
+						toRemove.add(module);
+						break;
+					}
+				}
+			}
 			
+			modules.removeAll(toRemove);
+			request.setAttribute("modules", new ArrayList<ModuleDto>(modules));
 			request.setAttribute("student", student);
 
 			request.getRequestDispatcher("/student/index.jsp").forward(request, response);
