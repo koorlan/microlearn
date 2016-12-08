@@ -5,27 +5,63 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TransactionRequiredException;
 
-import com.microlearn.entity.*;
-import com.microlearn.entity.dto.*;
+import com.microlearn.entity.Module;
+import com.microlearn.entity.Teacher;
+import com.microlearn.entity.dto.ModuleDto;
 
-@Stateless
 @LocalBean
+@Stateless
 public class ModuleBean {
+	final String FIND_BY_TEACHER = "Select m FROM Module m WHERE m.teacher=:teacher";
 	
 	@PersistenceContext(unitName="MicroLearn")
 	private EntityManager em;
 	
-	public List<ModuleDto> getModules(){
-		List<Module> modules = em.createQuery("From Module m").getResultList();
-		List<ModuleDto> modulesDto = new ArrayList<ModuleDto>();
+	public Module createModule(Teacher teacher, String title, String content) {
+		Module module = new Module();
+		module.setTeacher(teacher);
+		module.setTitle(title);
+		module.setContent(content);
 		
-		for(Module m : modules){
-			modulesDto.add(new ModuleDto(m.getId(),m.getChapters(),m.getTitle(),m.getContent()));
-		}
-		return modulesDto;
+		em.persist(module);
+		return module;
 	}
 	
-
+	public Module getModule(int id) {
+		try {
+			Module module = em.find(Module.class, id);
+			return module;
+		}
+		catch(IllegalArgumentException e) {
+			return null;
+		}
+	}
+	
+	public boolean delete(Module module) {
+		try{
+			em.remove(module);
+			return true;
+		}
+		catch (IllegalArgumentException | TransactionRequiredException e) {
+			return false;
+		}
+	}
+	
+	public boolean delete(int moduleId) {
+		return delete(em.find(Module.class, moduleId));
+	}
+	
+	public List<ModuleDto> getModules() {
+		List<Module> list = em.createQuery("Select m FROM Module m", Module.class).getResultList();
+		
+		List<ModuleDto> modules = new ArrayList<ModuleDto>();
+		for(Module module : list) {
+			modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+		}
+		return modules;
+	}
 }

@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Teacher;
@@ -45,23 +43,21 @@ public class DefaultControler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String n_login = request.getParameter("login");
 		String n_password = (String) request.getParameter("password");
 		if ((n_login != null) && (n_password != null)) {
-			Teacher accT = serviceAccount.getTeacher(n_login, DigestUtils.sha256Hex(n_password));
-			if (accT != null) {
-				request.getSession().setAttribute("account", accT);
-				response.sendRedirect(request.getContextPath() + "/teacher");
-
-			} else {
-				Student accS = serviceAccount.getStudent(n_login, DigestUtils.sha256Hex(n_password));
-				if (accS != null) {
-					request.getSession().setAttribute("account", accS);
-					response.sendRedirect(request.getContextPath() + "/student");
-				} else {
-					response.sendRedirect(request.getContextPath());
+			Account acc = serviceAccount.authenticate(n_login, n_password);
+			if (acc != null) { // User is authenticate, check if he's a teacher or a student
+				if(acc.getType().equals(TAccount.TEACHER)) {
+					request.getSession().setAttribute("account", (Teacher) acc);
+					response.sendRedirect(request.getContextPath() + "/teacher");
 				}
+				else if(acc.getType().equals(TAccount.STUDENT)) {
+					request.getSession().setAttribute("account", (Student) acc);
+					response.sendRedirect(request.getContextPath() + "/student");
+				}
+				else
+					response.sendRedirect(request.getContextPath());
 			}
 		}
 	}
