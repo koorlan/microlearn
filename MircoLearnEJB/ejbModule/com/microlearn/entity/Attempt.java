@@ -2,11 +2,13 @@ package com.microlearn.entity;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Attempt {
 	
 	@Id
@@ -20,6 +22,7 @@ public class Attempt {
 	private Student student;	
 	private Date date;	
 	private boolean success;
+	
 	public int getId() {
 		return id;
 	}

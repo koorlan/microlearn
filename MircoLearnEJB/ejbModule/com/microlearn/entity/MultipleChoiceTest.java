@@ -3,16 +3,24 @@ package com.microlearn.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="MCT")
 public class MultipleChoiceTest {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@OneToOne
+	private Chapter chapter;
 	
 	@OneToMany(mappedBy="mct", cascade=CascadeType.REMOVE)
 	private List<Question> questions;
@@ -53,5 +61,12 @@ public class MultipleChoiceTest {
 	public void setSuccessCondition(int successCondition) {
 		this.successCondition = successCondition;
 	}
-	
+
+	public Chapter getChapter() {
+		return chapter;
+	}
+
+	public void setChapter(Chapter chapter) {
+		this.chapter = chapter;
+	}
 }
