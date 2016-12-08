@@ -10,14 +10,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TransactionRequiredException;
 
 import com.microlearn.entity.Module;
+import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
 
 @LocalBean
 @Stateless
-public class ModuleBean {
-	final String FIND_BY_TEACHER = "Select m FROM Module m WHERE m.teacher=:teacher";
-	
+public class ModuleBean {	
 	@PersistenceContext(unitName="MicroLearn")
 	private EntityManager em;
 	

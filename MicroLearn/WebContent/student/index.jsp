@@ -9,26 +9,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>MicroLearn Test Page</title>
-
-    <link rel="stylesheet" href="../css/foundation.css">
-    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
+	<link rel="stylesheet" href="${root}/foundation/css/app.css">
+	<link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
 </head>
 <body>
+	<div class="row">
+		<div class="large-8 columns large-offset-2 text-center">
+			<h1>Student Page</h1>
+		</div>
+		<div class="large-6 columns">
+			<h2>All modules</h2>
+			<ul>
+				<c:forEach items="${moduleList}" var="module">
+					<li>${module.title}</li>
+					<li>${module.content}</li>
+				</c:forEach>
+			</ul>
+		</div>
+		<div class="large-6 columns">
+			<h2>My modules</h2>
+			<!-- <ul>
+				<c:forEach items="${myModules}" var="module">
+					<li>${module.title}</li>
+					<li>${module.content}</li>
+				</c:forEach>
+			</ul> -->
+		</div>
+	</div>
 
-<h1>Student Page</h1>
-
-<ul>
-	<c:forEach items="${moduleList}" var="module">
-		<li>${module.title}</li>
-		<li>${module.content}</li>
-	</c:forEach>
-</ul>
-
-
-    <script src="../js/vendor/jquery.js"></script>
-    <script src="../js/vendor/what-input.js"></script>
-    <script src="../js/vendor/foundation.js"></script>
-    <script src="../js/app.js"></script>
+    <script src="${root}/foundation/js/vendor/jquery.js"></script>
+	<script src="${root}/foundation/js/vendor/what-input.js"></script>
+	<script src="${root}/foundation/js/vendor/foundation.js"></script>
+	<script src="${root}/foundation/js/app.js"></script>
 
 </body>
 </html>

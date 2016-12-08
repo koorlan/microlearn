@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
 <link rel="stylesheet" href="${root}/foundation/css/app.css">
+<link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
 </head>
 <body>
 
