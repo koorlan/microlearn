@@ -14,6 +14,7 @@ public class Chapter {
 	
 	private String title;
 	private String content;
+	private int position;
 	
 	
 	public long getId() {
@@ -39,6 +40,12 @@ public class Chapter {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	

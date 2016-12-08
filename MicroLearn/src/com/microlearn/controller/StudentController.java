@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Module;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
+import com.microlearn.entity.dto.StudentDto;
 import com.microlearn.type.TAccount;
 
 /**
@@ -43,50 +45,16 @@ public class StudentController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Student student = (Student) request.getSession().getAttribute("account");
-		if (request.getParameter("todo") == null) {
+		
+		if(request.getParameter("todo") == null)
 			this.goHome(request, response);
-		} else {
+		else {
 			switch (request.getParameter("todo")) {
 			case "navigate":
-				if(request.getParameter("entity")!=null && request.getParameter("action")!= null){
-					switch(request.getParameter("entity")){
-					case "module":
-						switch(request.getParameter("action")){
-						case "view":
-							List<ModuleDto> modules = this.serviceModule.getModules();
-							for(ModuleDto m : modules){
-								if(m.getId() == Integer.parseInt(request.getParameter("id")))
-									request.getSession().setAttribute("module", m);
-							}
-							break;
-						default:
-							this.goHome(request, response);
-						}
-						break;
-					case "chapter":
-						switch(request.getParameter("action")){
-						case "view":
-							break;
-						default:
-							this.goHome(request, response);
-						}
-						break;
-					case "mct":
-						switch(request.getParameter("action")){
-						case "view":
-							break;
-						default:
-							this.goHome(request, response);
-						}
-						break;
-					default:
-						this.goHome(request, response);
-						break;
-					}
-					request.getRequestDispatcher("/student/"+request.getParameter("entity") + "/" + request.getParameter("action") +".jsp").forward(request, response);
-				}else{
+				if(request.getParameter("entity")!=null && request.getParameter("action")!= null)
+					naviguate(request, response);
+				else
 					this.goHome(request, response);
-				}
 				break;	
 			default:
 				this.goHome(request, response);
@@ -95,12 +63,58 @@ public class StudentController extends HttpServlet {
 		}
 		
 	}
+	
+	private void naviguate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		switch(request.getParameter("entity")){
+		case "module":
+			switch(request.getParameter("action")) {
+			case "view":
+				if(request.getParameter("id") != null) {
+					Module module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
+					request.getSession().setAttribute("module", module);
+				}
+				break;
+			default:
+				this.goHome(request, response);
+			}
+			break;
+		case "chapter":
+			switch(request.getParameter("action")){
+			case "view":
+				break;
+			default:
+				goHome(request, response);
+			}
+			break;
+		case "mct":
+			switch(request.getParameter("action")){
+			case "view":
+				break;
+			default:
+				this.goHome(request, response);
+			}
+			break;
+		default:
+			this.goHome(request, response);
+			break;
+		}
+		
+		request.getRequestDispatcher("/student/" + request.getParameter("entity") 
+		+ "/" + request.getParameter("action") + ".jsp").forward(request, response);
+	}
 
 	public void goHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO module du student
-		List<ModuleDto> modules = this.serviceModule.getModules();
-		request.getSession().setAttribute("moduleList", new ArrayList<ModuleDto>(modules));
-		request.getRequestDispatcher("/student/index.jsp").forward(request, response);
+		StudentDto student = serviceAccount.getStudent((Account)request.getSession().getAttribute("account"));
+		if(student != null)
+		{
+			List<ModuleDto> modules = this.serviceModule.getModules();
+			request.getSession().setAttribute("moduleList", new ArrayList<ModuleDto>(modules));
+			
+			request.setAttribute("student", student);
+
+			request.getRequestDispatcher("/student/index.jsp").forward(request, response);
+		}
+		// @ TODO what's if there is no student ? Technically impossible ?
 	}
 
 	

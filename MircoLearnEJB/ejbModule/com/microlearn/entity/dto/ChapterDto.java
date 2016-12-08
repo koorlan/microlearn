@@ -10,13 +10,15 @@ public class ChapterDto {
 	private Module module;	
 	private String title;
 	private String content;
+	private int position;
 	
-	public ChapterDto(long id, Module module, String title, String content) {
+	public ChapterDto(long id, Module module, String title, String content, int position) {
 		super();
 		this.id = id;
 		this.module = module;
 		this.title = title;
 		this.content = content;
+		this.position = position;
 	}
 
 	public long getId() {
@@ -35,6 +37,8 @@ public class ChapterDto {
 		return content;
 	}
 	
-	
+	public int getPosition() {
+		return position;
+	}
 	
 }

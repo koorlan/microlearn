@@ -12,17 +12,21 @@ import com.microlearn.entity.Module;
 @LocalBean
 @Stateless
 public class ChapterBean {
-	
-	final String FIND_BY_MODULE = "Select c FROM Chapter c WHERE c.module.id=:moduleId";
-
 	@PersistenceContext(unitName="MicroLearn")
 	private EntityManager em;
 	
-	public Chapter createChapter(String title, String content, Module module) {
+	public Chapter getChapter(int id) {
+		Chapter chapter = em.find(Chapter.class, id);
+		
+		return chapter;
+	}
+	
+	public Chapter createChapter(String title, String content, Module module, int position) {
 		Chapter chapter = new Chapter();
 		chapter.setTitle(title);
 		chapter.setContent(content);
 		chapter.setModule(module);
+		chapter.setPosition(position);
 		
 		em.persist(chapter);
 		return chapter;
