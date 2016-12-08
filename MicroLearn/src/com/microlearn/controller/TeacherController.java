@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Module;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.type.TAccount;
@@ -48,15 +49,44 @@ public class TeacherController extends HttpServlet {
 		} else {
 			switch (request.getParameter("todo")) {
 			case "module_add":
-				
+				if(request.getParameter("title")!=null && request.getParameter("content")!= null ){
+					Module module = this.serviceModule.createModule(teacher, request.getParameter("title"), request.getParameter("content"));	
+					teacher.getModules().add(module);
+					//prepare the session for the module view
+					request.setAttribute("module", new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+					request.getRequestDispatcher("/teacher/module/view.jsp").forward(request, response);
+				}
 				break;
 			case "module_delete":
-
+				if(request.getParameter("id")!=null ){
+					for(Module module : teacher.getModules()){
+						if(module.getId() == Integer.parseInt(request.getParameter("id"))){
+							teacher.getModules().remove(module);
+							this.serviceModule.delete(module);
+							break;
+						}
+					}
+					this.goHome(request, response);
+				}
 				break;
 			case "module_edit":
 				if(request.getParameter("title")!=null && request.getParameter("content")!= null && request.getParameter("id")!= null){
-					//TODO : getModuleById and modify 
-					this.goHome(request, response);
+					Module modified_module = null;
+					for(Module module : teacher.getModules()){
+						if(module.getId() == Integer.parseInt(request.getParameter("id"))){
+							modified_module = module;
+							break;
+						}
+					}
+					if(modified_module != null){
+						modified_module.setTitle(request.getParameter("title"));
+						modified_module.setContent(request.getParameter("content"));
+						request.setAttribute("module", modified_module);
+						request.getRequestDispatcher("/teacher/module/view.jsp").forward(request, response);
+					}else{
+						this.goHome(request, response);
+					}
+					
 				}
 				break;
 			case "chapter_add":
@@ -83,22 +113,26 @@ public class TeacherController extends HttpServlet {
 					case "module":
 						switch(request.getParameter("action")){
 						case "view":
-							List<ModuleDto> modules = this.serviceModule.getModules();
-							for(ModuleDto m : modules){
-								if(m.getId() == Integer.parseInt(request.getParameter("id")))
-									request.getSession().setAttribute("module", m);
+							if(request.getParameter("id") !=null){
+								for(Module module : teacher.getModules()){
+									if(module.getId() == Integer.parseInt(request.getParameter("id"))){
+										request.setAttribute("module", new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+										break;
+									}			
+								}			
 							}
-							break;
-						case "add":
-							break;
-						case "delete":
 							break;
 						case "edit":
-							List<ModuleDto> modules2 = this.serviceModule.getModules();
-							for(ModuleDto m : modules2){
-								if(m.getId() == Integer.parseInt(request.getParameter("id")))
-									request.getSession().setAttribute("module", m);
+							if(request.getParameter("id") !=null){
+								for(Module module : teacher.getModules()){
+									if(module.getId() == Integer.parseInt(request.getParameter("id"))){
+										request.setAttribute("module", new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+										break;
+									}			
+								}			
 							}
+							break;
+						case "add": //Keep thoses 2 lines (sort of filter for allowed action on module navigation -> else default and goHome Called otherwise let requestDispatcher to do the job)
 							break;
 						default:
 							this.goHome(request, response);
@@ -146,12 +180,15 @@ public class TeacherController extends HttpServlet {
 				break;
 			}
 		}
-
 	}
 
 	public void goHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<ModuleDto> modules = this.serviceModule.getModules();
-		request.getSession().setAttribute("moduleList", new ArrayList<ModuleDto>(modules));
+		Teacher teacher = (Teacher) request.getSession().getAttribute("account");
+		List<ModuleDto> modules = new ArrayList<ModuleDto>();
+		for(Module module : teacher.getModules()){
+			modules.add(new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent()));
+		}
+		request.setAttribute("moduleList", modules);
 		request.getRequestDispatcher("/teacher/index.jsp").forward(request, response);
 	}
 

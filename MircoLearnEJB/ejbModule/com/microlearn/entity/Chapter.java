@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 public class Chapter {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@ManyToOne

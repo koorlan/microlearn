@@ -42,7 +42,7 @@
 
 	<div class="row">
 	<a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
-     <a class="alert button float-right" href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Delete</a>
+     <a class="alert button float-right" href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>
 	</div>
 
 

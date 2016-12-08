@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Module {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@OneToMany(mappedBy="module")
