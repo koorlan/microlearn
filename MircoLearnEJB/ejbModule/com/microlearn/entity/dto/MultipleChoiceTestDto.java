@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.microlearn.entity.Attempt;
+import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Question;
 
 public class MultipleChoiceTestDto {
@@ -12,8 +13,9 @@ public class MultipleChoiceTestDto {
 	private List<QuestionDto> questions;
 	private List<AttemptDto> attempts;	
 	private int successCondition;
-
-	public MultipleChoiceTestDto(int id, List<Question> questions, List<Attempt> attempts, int successCondition) {
+	private ChapterDto chapter;
+	
+	public MultipleChoiceTestDto(int id, List<Question> questions, List<Attempt> attempts, int successCondition, ChapterDto chapterDto) {
 		this.id = id;
 		this.questions = new ArrayList<QuestionDto>();
 		for(Question question : questions) {
@@ -25,6 +27,12 @@ public class MultipleChoiceTestDto {
 			this.attempts.add(new AttemptDto(attempt.getId(), attempt.getDate(), attempt.isSuccess(), 
 					attempt.getStudent().getLogin()));
 		}
+		this.chapter = chapterDto;
+		
+	}
+
+	public ChapterDto getChapter() {
+		return chapter;
 	}
 
 	public int getId() {

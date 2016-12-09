@@ -72,7 +72,6 @@ public class StudentController extends HttpServlet {
 				if(request.getParameter("id") != null) {
 					ModuleDto module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
 					int lastSuccess = serviceModule.getLastSuccess(module.getId(), student.getLogin());
-					System.out.println(String.valueOf(lastSuccess));
 					request.setAttribute("module", module);
 					request.setAttribute("lastSuccess", lastSuccess);
 				}

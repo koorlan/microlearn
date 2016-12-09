@@ -14,12 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ChapterBean;
 import com.microlearn.bean.ModuleBean;
+import com.microlearn.bean.MultipleChoiceTestBean;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
+import com.microlearn.entity.dto.MultipleChoiceTestDto;
 import com.microlearn.entity.dto.TeacherDto;
 import com.microlearn.type.TAccount;
 
@@ -38,6 +40,9 @@ public class TeacherController extends HttpServlet {
 
 	@EJB
 	private ChapterBean serviceChapter;
+	
+	@EJB
+	private MultipleChoiceTestBean serviceMct;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -203,6 +208,13 @@ public class TeacherController extends HttpServlet {
 					case "mct":
 						switch(request.getParameter("action")){
 						case "view":
+							if(request.getParameter("id") !=null){
+								int id =Integer.parseInt(request.getParameter("id"));
+								MultipleChoiceTestDto mct = this.serviceMct.getMCT(id);
+								if(mct.getChapter().getModule().getTeacher().getLogin().equals(teacher.getLogin())){
+									request.setAttribute("mct", mct);
+								}
+							}
 							break;
 						case "add":
 							break;

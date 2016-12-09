@@ -43,7 +43,15 @@
 
 </div>
 	<div class="row">
-
+		<div class="large-10 medium-10 columns">
+			Related Multiple Choice Test
+			Name : <a class="button float-right"
+				href="${root}/TeacherController?&todo=navigate&entity=mct&action=view&id=${chapter.mct.id}">View</a>
+			<a class="button float-right"
+				href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
+			<a class="alert button float-right"
+				href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
+		</div>
 		<div class="large-10 medium-10 columns">
 		<div class="large-8 medium-8 columns">
 		<div id='titleOUT'></div>
@@ -59,6 +67,10 @@
 	<div class="row">
 		<div id='contentOUT'></div>
 	</div>
+
+
+
+
 
 <div id='titleMD'>
 <!--

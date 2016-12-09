@@ -37,11 +37,10 @@
 	<br>
 
 
-	<h1>Teacher Page</h1>
-
-
-
-	<div class="row"></div>
+	<c:forEach items="${mct.questions}" var="question">
+		${question.questionText}
+	
+	</c:forEach>
 
 
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>
