@@ -1,5 +1,6 @@
 package com.microlearn.entity.dto;
 
+import com.microlearn.entity.Attempt;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.MultipleChoiceTest;
 
@@ -8,6 +9,7 @@ public class ChapterDto {
 	private int id;
 	private Module module;
 	private MultipleChoiceTestDto mct;
+	private boolean hasMCT;
 	private String title;
 	private String content;
 	private int position;
@@ -19,10 +21,14 @@ public class ChapterDto {
 		this.title = title;
 		this.content = content;
 		this.position = position;
-		if(mct != null)
-			this.mct = new MultipleChoiceTestDto(mct.getId(), mct.getQuestions(), mct.getAttempts(), mct.getSuccessCondition(), this);
-		else
+		if(mct != null) {
+			this.mct = new MultipleChoiceTestDto(mct.getId(), mct.getQuestions(), mct.getAttempts(), mct.getSuccessCondition());
+			hasMCT = true;
+		}
+		else {
 			this.mct = null;
+			hasMCT = false;
+		}
 	}
 
 	public int getId() {
@@ -60,5 +66,9 @@ public class ChapterDto {
 	
 	public MultipleChoiceTestDto getMct() {
 		return mct;
+	}
+
+	public boolean getHasMCT() {
+		return hasMCT;
 	}
 }

@@ -47,26 +47,44 @@
 	</div>
 	
 	<div class="row">
-		<ul>
-			<c:forEach items="${module.chapters}" var="chapter">
-				<c:choose>
-				    <c:when test="${chapter.position <= lastSuccess}">
-				       <div class="row callout success">
-				    </c:when>
-				    <c:otherwise>
-				        <div class="row callout alert">
-				    </c:otherwise>
-				</c:choose>				
-                  <div class="large-4 medium-4 columns clearfix">
-                    <a href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
-                    <br>
-                    Description : ${chapter.content}
-                  </div>
-                  <div class="large-4 medium-4 columns clearfix">
-                  </div>
-            	</div>
-			</c:forEach>
-		</ul>
+		<div class="large-8 large-offset-2 columns">
+			<ul>
+				<c:forEach items="${module.chapters}" var="chapter">
+					<c:choose>
+					    <c:when test="${chapter.position <= lastSuccess}">
+					       	<div class="row callout success">
+						       <div class="large-12 medium-12 columns clearfix">
+				                    <a href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
+				                    <br>
+				                    Description : ${chapter.content}
+			                  </div>
+			            	</div>
+					    </c:when>
+					    <c:when test="${chapter.position == lastSuccess + 1}">
+					    	<div class="row callout">
+						       <div class="large-6 medium-6 columns clearfix">
+				                    <a href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
+				                    <br>
+				                    Description : ${chapter.content}
+			                  </div>
+			                  <div class="large-6 medium-6 columns clearfix">
+				                    <a class="button" href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">Read</a>
+			                  </div>
+		            		</div>
+					    </c:when>
+					    <c:otherwise>
+					        <div class="row callout alert">
+						        <div class="large-12 medium-12 columns clearfix">
+				                    <p>${chapter.title}</p>
+				                    <br>
+				                    Description : ${chapter.content}
+			                  </div>
+		            		</div>
+					    </c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</ul>
+		</div>
 	</div>
 
 </div>

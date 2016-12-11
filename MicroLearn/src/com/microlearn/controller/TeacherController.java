@@ -1,8 +1,6 @@
 package com.microlearn.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,7 +13,6 @@ import com.microlearn.bean.AccountBean;
 import com.microlearn.bean.ChapterBean;
 import com.microlearn.bean.ModuleBean;
 import com.microlearn.bean.MultipleChoiceTestBean;
-import com.microlearn.entity.Account;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.Teacher;
@@ -23,7 +20,6 @@ import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.entity.dto.MultipleChoiceTestDto;
 import com.microlearn.entity.dto.TeacherDto;
-import com.microlearn.type.TAccount;
 
 /**
  * Servlet implementation class TeacherControler
@@ -67,7 +63,7 @@ public class TeacherController extends HttpServlet {
 			case "module_add":
 				if(request.getParameter("title")!=null && request.getParameter("content")!= null ){
 					Module module = this.serviceModule.createModule(teacher, request.getParameter("title"), request.getParameter("content"));	
-					request.setAttribute("module", new ModuleDto(module.getId(), module.getChapters(), module.getTitle(), module.getContent(),module.getTeacher()));
+					request.setAttribute("module", serviceModule.getModule(module.getId()));
 					request.getRequestDispatcher("/teacher/module/view.jsp").forward(request, response);
 				}
 				break;
@@ -209,9 +205,9 @@ public class TeacherController extends HttpServlet {
 						switch(request.getParameter("action")){
 						case "view":
 							if(request.getParameter("id") !=null){
-								int id =Integer.parseInt(request.getParameter("id"));
-								MultipleChoiceTestDto mct = this.serviceMct.getMCT(id);
-								if(mct.getChapter().getModule().getTeacher().getLogin().equals(teacher.getLogin())){
+								int id = Integer.parseInt(request.getParameter("id"));
+								if(serviceMct.canAccess(id, teacher.getLogin())) {
+									MultipleChoiceTestDto mct = this.serviceMct.getMCT(id);
 									request.setAttribute("mct", mct);
 								}
 							}

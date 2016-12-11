@@ -1,19 +1,23 @@
 package com.microlearn.entity.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.microlearn.entity.Answer;
 
 public class QuestionDto {
 
 	private int id;
 	private String questionText;
-	private List<String> goodAnswers;
-	private List<String> badAnswers;
+	private List<AnswerDto> answers;
 	
-	public QuestionDto(int id, String questionText, List<String> goodAnswers, List<String> badAnswers) {
+	public QuestionDto(int id, String questionText, List<Answer> answers) {
 		this.id = id;
 		this.questionText = questionText;
-		this.goodAnswers = goodAnswers;
-		this.badAnswers = badAnswers;
+		this.answers = new ArrayList<AnswerDto>();
+		for(Answer answer : answers) {
+			this.answers.add(new AnswerDto(answer.getId(), answer.getText(), answer.isTrue()));
+		}
 	}
 
 	public int getId() {
@@ -24,11 +28,7 @@ public class QuestionDto {
 		return questionText;
 	}
 
-	public List<String> getGoodAnswers() {
-		return goodAnswers;
+	public List<AnswerDto> getAnswers() {
+		return answers;
 	}
-
-	public List<String> getBadAnswers() {
-		return badAnswers;
-	}	
 }

@@ -1,5 +1,7 @@
 package com.microlearn.bean;
 
+import java.util.Date;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -7,9 +9,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
+import com.microlearn.entity.Account;
+import com.microlearn.entity.Attempt;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
+import com.microlearn.entity.MultipleChoiceTest;
 import com.microlearn.entity.dto.ChapterDto;
+import com.microlearn.entity.dto.MultipleChoiceTestDto;
+import com.microlearn.entity.Student;
 
 @LocalBean
 @Stateless
@@ -68,5 +75,29 @@ public class ChapterBean {
 		catch (PersistenceException e) {
 			return false;
 		}
+	}
+	
+	public MultipleChoiceTestDto getMct(int chapterId) {
+		try{
+			Chapter chapter = em.find(Chapter.class, chapterId);
+			MultipleChoiceTest data = chapter.getMct();
+			MultipleChoiceTestDto mct = new MultipleChoiceTestDto(data.getId(), data.getQuestions(), data.getAttempts(), data.getSuccessCondition());
+			return mct;
+		}
+		catch (PersistenceException e) {
+			return null;
+		}
+	}
+	
+	public void addAttempt(int mctId, String studentLogin, boolean success) {
+		MultipleChoiceTest mct = em.find(MultipleChoiceTest.class, mctId);
+		Student student = (Student) em.find(Account.class, studentLogin);
+		Attempt attempt = new Attempt();
+		attempt.setStudent(student);
+		attempt.setMct(mct);
+		attempt.setDate(new Date());
+		attempt.setSuccess(success);
+		
+		em.persist(attempt);
 	}
 }

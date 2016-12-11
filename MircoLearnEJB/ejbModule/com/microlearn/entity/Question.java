@@ -2,12 +2,12 @@ package com.microlearn.entity;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Question {
@@ -21,11 +21,8 @@ public class Question {
 	
 	private String questionText;
 	
-	@ElementCollection
-	private List<String> goodAnswers;
-	
-	@ElementCollection
-	private List<String> badAnswers;
+	@OneToMany(mappedBy="question")
+	private List<Answer> answers;
 
 	public int getId() {
 		return id;
@@ -43,19 +40,19 @@ public class Question {
 		this.questionText = questionText;
 	}
 
-	public List<String> getGoodAnswers() {
-		return goodAnswers;
+	public MultipleChoiceTest getMct() {
+		return mct;
 	}
 
-	public void setGoodAnswers(List<String> goodAnswers) {
-		this.goodAnswers = goodAnswers;
+	public void setMct(MultipleChoiceTest mct) {
+		this.mct = mct;
 	}
 
-	public List<String> getBadAnswers() {
-		return badAnswers;
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setBadAnswers(List<String> badAnswers) {
-		this.badAnswers = badAnswers;
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 }

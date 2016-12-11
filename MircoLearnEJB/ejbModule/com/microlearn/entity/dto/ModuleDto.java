@@ -17,7 +17,6 @@ public class ModuleDto {
 	private Teacher teacher;
 	
 	public ModuleDto(int id, List<Chapter> chapters, String title, String content, Teacher teacher) {
-		super();
 		this.id = id;
 		this.chapters = new ArrayList<ChapterDto>();
 		for(Chapter c: chapters){

@@ -1,20 +1,13 @@
 package com.microlearn.bean;
 
-import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
-import com.microlearn.entity.Attempt;
 import com.microlearn.entity.Chapter;
-import com.microlearn.entity.Module;
 import com.microlearn.entity.MultipleChoiceTest;
-import com.microlearn.entity.Question;
-import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.MultipleChoiceTestDto;
 
 @LocalBean
@@ -31,11 +24,8 @@ public class MultipleChoiceTestBean {
 	
 	public MultipleChoiceTestDto getMCT(int id){
 		try{
-			MultipleChoiceTest mct =  em.find(MultipleChoiceTest.class,id);
-			Chapter c = mct.getChapter();
-			ChapterDto cd = new ChapterDto(c.getId(),c.getModule(),c.getTitle(),c.getContent(),c.getPosition(),mct);
-			
-			return new MultipleChoiceTestDto(mct.getId(),mct.getQuestions(),mct.getAttempts(),mct.getSuccessCondition(),cd);
+			MultipleChoiceTest mct =  em.find(MultipleChoiceTest.class,id);			
+			return new MultipleChoiceTestDto(mct.getId(),mct.getQuestions(),mct.getAttempts(),mct.getSuccessCondition());
 		}catch (Exception e){
 			return null;
 		}
@@ -55,5 +45,8 @@ public class MultipleChoiceTestBean {
 		}
 	}
 	
-	
+	public boolean canAccess(int mctId, String teacherLogin) {
+		MultipleChoiceTest mct = em.find(MultipleChoiceTest.class, mctId);
+		return mct.getChapter().getModule().getTeacher().getLogin().equals(teacherLogin);
+	}
 }

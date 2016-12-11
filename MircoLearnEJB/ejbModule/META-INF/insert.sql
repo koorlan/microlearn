@@ -39,19 +39,16 @@ VALUES
 (3, 'How are you ?', 2),
 (4, 'What is your name ?', 2);
 
-INSERT INTO QUESTION_BADANSWERS (question_id, badanswers)
-VALUES 
-(1, 'I am bad'),
-(2, 'Roger'),
-(3, 'I am bad'),
-(4, 'Roger');
-
-INSERT INTO QUESTION_GOODANSWERS (question_id, goodanswers)
-VALUES 
-(1, 'I am good'),
-(2, 'Anthony'),
-(3, 'I am good'),
-(4, 'Anthony');
+INSERT INTO ANSWER (id, istrue, text, question_id)
+VALUES
+(1, 1, 'Fine !', 1),
+(2, 1, 'Fine !', 3),
+(3, 0, 'Not good ...', 1),
+(4, 0, 'Not good ...', 3),
+(5, 1, 'Anthony', 2),
+(6, 1, 'Anthony', 4),
+(7, 0, 'Roger', 2),
+(8, 0, 'Roger', 4);
 
 INSERT INTO ATTEMPT (id, date, success, mct_id, student_login)
 VALUES

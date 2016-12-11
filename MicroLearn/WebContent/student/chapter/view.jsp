@@ -33,21 +33,34 @@
       </div>
     </div>
 
-	<br>
-
-
-	<h1>Teacher Page</h1>
-
-
-
-	<div class="row"></div>
-
+	<div class="row">
+		<div class="large-8 large-offset-2 columns">
+			<h1>${chapter.title}</h1>
+			<p>${chapter.content}</p>
+			<c:if test="${chapter.hasMCT }">
+				<h5>${chapter.mct.successCondition}</h5>
+				<form action="StudentController">
+					<ul>
+						<c:forEach items="${chapter.mct.questions}" var="question">
+							<li>
+							<p>${question.questionText}</p>
+							<c:forEach items="${question.answers}" var="answer">
+								<input type="checkbox" name="answer-${answer.id}" id="answer-${answer.id}" /> ${answer.text}
+							</c:forEach>
+							</li>
+						</c:forEach>
+					</ul>
+					<input type="hidden" name="chapter_id" value="${ chapter.id }" />
+					<button type="submit" name="todo" value="answer" class="button expanded">Validate answers</button>
+				</form>
+			</c:if>
+		</div>
+	</div>
 
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>
 	<script src="${root}/foundation/js/vendor/what-input.js"></script>
 	<script src="${root}/foundation/js/vendor/foundation.js"></script>
 	<script src="${root}/foundation/js/app.js"></script>
-
 
 </body>
 </html>
