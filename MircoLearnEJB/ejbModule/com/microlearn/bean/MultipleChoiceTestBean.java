@@ -4,6 +4,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
 import com.microlearn.entity.Answer;
@@ -78,5 +79,16 @@ public class MultipleChoiceTestBean {
 		em.persist(a);
 		
 		return a;
+	}
+	
+	public boolean updateSuccessCondition(int id, int successCondition){
+		try{
+			MultipleChoiceTest mct = em.find(MultipleChoiceTest.class, id);
+			mct.setSuccessCondition(successCondition);
+			return true;
+		}
+		catch (PersistenceException e) {
+			return false;
+		}
 	}
 }
