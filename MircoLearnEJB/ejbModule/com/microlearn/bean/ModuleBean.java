@@ -13,6 +13,8 @@ import javax.persistence.TransactionRequiredException;
 import com.microlearn.entity.Account;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
+import com.microlearn.entity.MultipleChoiceTest;
+import com.microlearn.entity.Question;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.AttemptDto;
@@ -130,4 +132,5 @@ public class ModuleBean {
 		int lastSuccess = getLastSuccess(chapter.getModule().getId(), studentLogin);
 		return chapter.getPosition() <= lastSuccess;
 	}
+	
 }

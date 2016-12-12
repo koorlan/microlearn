@@ -38,6 +38,18 @@
 
 	<div class="row">
 
+
+
+
+<form action="TeacherController" id="form">
+	<label> Minimum validated question to pass this test? 
+	<input type="number" value="1" name="sucess_condition">
+	<input type="hidden" value="${mct.id }" name="id">
+	</label> 
+	<button class="button expanded" type="submit" name="todo"
+						value="mct_edit">Save MCT</button>
+</form>	
+
 <c:forEach items="${mct.questions}" var="question">
 	<div class="row">
 		<div class="callout">
@@ -61,41 +73,22 @@
 
 </c:forEach>
 
-
-<form action="TeacherController" id="form">
-	<label> Minimum validated question to pass this test? 
-	<input type="number" value="1" name="sucess_condition">
-	</label> 
-	<input type="hidden" value="0" name="question_counter">
-	
+<form action="TeacherController" id="question_form">
+	<input type="hidden" value="1" name="answer_counter">
+	<input type="hidden" value="${mct.id }" name="mct_id">
 	<button class="button expanded" type="submit" name="todo"
-						value="question_add">Save MCT</button>
-
+						value="question_add">Save Question</button>
 	<button class="button expanded" type="button" 
-						onClick="add_question();")>Add Question</button>
-	<div class="callout">
+						onClick="add_answer();")>Add Answer</button>
+	
 		<label>Enter the question here.
-			<input type="text" placeholder="Question.." name="q0">
+			<input type="text" placeholder="Question.." name="question">
 		</label>
-		<ul>
-		  	<li>
-			<input type="text" placeholder="Answer" name="q0-a0">
-			 <input type="checkbox" name="q0-a0-t"> True?<br>
-			</li>
-			  	<li>
-			<input type="text" placeholder="Answer" name="q0-a1">
-			<input type="checkbox" name="q0-a1-t"> True?<br>
-			</li>
-			  	<li>
-			<input type="text" placeholder="Answer" name="q0-a2">
-			<input type="checkbox" name="q0-a2-t"> True?<br>
-			</li>
-		</ul>
-			
-	</div>
+		<div class="callout">
+			<input type="text" placeholder="Answer" name="0">
+			 <input type="checkbox" name="0_t"> True?
+		</div>
 
-			
-	</div>
 </form>	
 	
 	
@@ -107,11 +100,12 @@
 	<script src="${root}/foundation/js/vendor/foundation.js"></script>
 	<script src="${root}/foundation/js/app.js"></script>
 	<script type="text/javascript">
-	function add_question(){
-		$('#form').append('<input type="text" name="myfieldname" value="myvalue" />');
+	function add_answer(){
+		var prev = $('input[name="answer_counter"]').val();
+		
+		$('#question_form').append('<div class="callout"> <input type="text" placeholder="Answer" name="'+ prev +'">  <input type="checkbox" name="'+prev+'_t"> True? </div>');
 
-			var prev = $('input[name="question_counter"]').val();
-			$('input[name="question_counter"]').val(parseInt(prev)+1);
+		$('input[name="answer_counter"]').val(parseInt(prev)+1);
 	
 			
 		}

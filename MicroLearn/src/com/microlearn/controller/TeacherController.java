@@ -16,6 +16,7 @@ import com.microlearn.bean.MultipleChoiceTestBean;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.MultipleChoiceTest;
+import com.microlearn.entity.Question;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
@@ -136,14 +137,33 @@ public class TeacherController extends HttpServlet {
 					
 				}
 				break;
-			case "mct_add":
-
-				break;
 			case "mct_delete":
-
+				
 				break;
 			case "mct_edit":
-
+				
+				break;
+			case "question_add":
+				if(request.getParameter("mct_id")!=null && !request.getParameter("0").isEmpty() && !request.getParameter("question").isEmpty()){
+					int mct_id = Integer.parseInt(request.getParameter("mct_id"));
+					int answer_counter = Integer.parseInt(request.getParameter("answer_counter"));
+					
+					String questionText = request.getParameter("question");
+					Question q = this.serviceMct.createQuestion(mct_id,questionText);
+					
+					for(int i=0; i<answer_counter;i++){
+						if(!request.getParameter(Integer.toString(i)).isEmpty()){
+							boolean isTrue = false;
+							if( request.getParameter(Integer.toString(i)+"_t")!=null && request.getParameter(Integer.toString(i)+"_t").equals("on")){
+								isTrue = true;
+							}
+							this.serviceMct.createAnswer(q.getId(),request.getParameter(Integer.toString(i)),isTrue);
+						}
+					}
+					MultipleChoiceTestDto mct = this.serviceMct.getMCT(mct_id);
+					request.setAttribute("mct", mct);
+					request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
+				}
 				break;
 			case "navigate":
 				if(request.getParameter("entity")!=null && request.getParameter("action")!= null){
