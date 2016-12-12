@@ -11,10 +11,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Attempt;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
 import com.microlearn.entity.MultipleChoiceTest;
-import com.microlearn.entity.Question;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.AttemptDto;
@@ -112,7 +112,8 @@ public class ModuleBean {
 				break;
 			}				
 			for(AttemptDto attempt : chapter.getMct().getAttempts()) {
-				if(attempt.isSuccess() && attempt.getUserLogin().equals(studentLogin)) {
+				if(attempt.getScore() >= chapter.getMct().getSuccessCondition() 
+						&& attempt.getUserLogin().equals(studentLogin)) {
 					// MCT for the current chapter has been completed
 					lastSuccess = chapter.getPosition();
 				}
@@ -127,10 +128,24 @@ public class ModuleBean {
 		return chapter.getPosition() <= lastSuccess + 1;
 	}
 	
-	public boolean isChapterValidate(int chapterId, String studentLogin) {
+	public int getChapterScore(int chapterId, String studentLogin) {
 		Chapter chapter = em.find(Chapter.class, chapterId);
-		int lastSuccess = getLastSuccess(chapter.getModule().getId(), studentLogin);
-		return chapter.getPosition() <= lastSuccess;
+		MultipleChoiceTest mct = chapter.getMct();
+		
+		List<Attempt> attempts = mct.getAttempts();
+		
+		int score = -1;
+		for(Attempt attempt : attempts) {
+			if(attempt.getStudent().getLogin().equals(studentLogin) &&
+					score < attempt.getScore()) {
+				score = attempt.getScore();
+			}
+		}
+		
+		if(score < mct.getSuccessCondition())
+			score = -1;
+		
+		return score;
 	}
 	
 }

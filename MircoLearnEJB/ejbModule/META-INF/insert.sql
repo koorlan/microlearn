@@ -27,10 +27,10 @@ VALUES
 (7, 'chapter7', 'content',0,7),
 (8, 'chapter8', 'content',0,8);
 
-INSERT INTO MCT (id, successcondition, chapter_id)
+INSERT INTO MCT (id, successcondition, chapter_id, showanswers)
 VALUES 
-(1, 2, 1),
-(2, 2, 2);
+(1, 2, 1, true),
+(2, 2, 2, false);
 
 INSERT INTO QUESTION (id, questiontext, mct_id)
 VALUES 
@@ -56,6 +56,6 @@ VALUES
 (12, 0, '4', 5),
 (13, 1, 'We don t care it s a pizza', 5);
 
-INSERT INTO ATTEMPT (id, date, success, mct_id, student_login)
+INSERT INTO ATTEMPT (id, date, score, mct_id, student_login)
 VALUES
-(1, NOW(), 1, 1, 'korlans');
+(1, NOW(), 2, 1, 'korlans');

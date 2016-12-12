@@ -12,8 +12,9 @@ public class MultipleChoiceTestDto {
 	private List<QuestionDto> questions;
 	private List<AttemptDto> attempts;	
 	private int successCondition;
+	private boolean showAnswers;
 	
-	public MultipleChoiceTestDto(int id, List<Question> questions, List<Attempt> attempts, int successCondition) {
+	public MultipleChoiceTestDto(int id, List<Question> questions, List<Attempt> attempts, int successCondition, boolean showAnswers) {
 		this.id = id;
 		this.questions = new ArrayList<QuestionDto>();
 		for(Question question : questions) {
@@ -21,10 +22,11 @@ public class MultipleChoiceTestDto {
 		}
 		this.attempts = new ArrayList<AttemptDto>();
 		for(Attempt attempt : attempts) {
-			this.attempts.add(new AttemptDto(attempt.getId(), attempt.getDate(), attempt.isSuccess(), 
+			this.attempts.add(new AttemptDto(attempt.getId(), attempt.getDate(), attempt.getScore(), 
 					attempt.getStudent().getLogin()));
 		}
 		this.successCondition = successCondition;
+		this.showAnswers = showAnswers;
 	}
 
 	public int getId() {
@@ -41,5 +43,9 @@ public class MultipleChoiceTestDto {
 
 	public int getSuccessCondition() {
 		return successCondition;
+	}
+
+	public boolean getShowAnswers() {
+		return showAnswers;
 	}
 }

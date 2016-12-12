@@ -21,7 +21,7 @@ public class Attempt {
 	@ManyToOne
 	private Student student;	
 	private Date date;	
-	private boolean success;
+	private int score;
 	
 	public int getId() {
 		return id;
@@ -47,10 +47,10 @@ public class Attempt {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public boolean isSuccess() {
-		return success;
+	public void setScore(int score) {
+		this.score = score;
 	}
-	public void setSuccess(boolean success) {
-		this.success = success;
+	public int getScore() {
+		return score;
 	}
 }

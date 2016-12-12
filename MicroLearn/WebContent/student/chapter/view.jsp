@@ -39,6 +39,11 @@
 			<p>${chapter.content}</p>
 			<c:if test="${chapter.hasMCT }">
 				<em>Good answers required to success the test: ${chapter.mct.successCondition}</em>
+				<c:if test="${ score > -1 }">
+					<br/>
+					Your score for this test is: ${ score }
+				</c:if>
+				<c:if test="${ score == -1 || chapter.mct.showAnswers }">
 				<form action="StudentController">
 					<ul>
 						<c:forEach items="${chapter.mct.questions}" var="question">
@@ -46,7 +51,7 @@
 							<p>${question.questionText}</p>
 							<c:forEach items="${question.answers}" var="answer">
 								<c:choose>
-									<c:when test="${ isValidate }">
+									<c:when test="${ score > -1 }">
 										<input <c:if test="${answer.isTrue }">checked</c:if> disabled type="checkbox" name="answer-${answer.id}" id="answer-${answer.id}" /> ${answer.text}
 									</c:when>
 									<c:otherwise>
@@ -58,10 +63,11 @@
 						</c:forEach>
 					</ul>
 					<input type="hidden" name="chapter_id" value="${ chapter.id }" />
-					<c:if test="${ !isValidate }">
+					<c:if test="${ score == -1 }">
 						<button type="submit" name="todo" value="answer" class="button expanded">Validate answers</button>
 					</c:if>
 				</form>
+				</c:if>
 			</c:if>
 		</div>
 	</div>
