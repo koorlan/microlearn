@@ -24,6 +24,7 @@ public class MultipleChoiceTestDto {
 			this.attempts.add(new AttemptDto(attempt.getId(), attempt.getDate(), attempt.isSuccess(), 
 					attempt.getStudent().getLogin()));
 		}
+		this.successCondition = successCondition;
 	}
 
 	public int getId() {

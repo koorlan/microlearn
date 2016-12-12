@@ -27,7 +27,7 @@ public class AnswerDto {
 		this.text = text;
 	}
 
-	public boolean isTrue() {
+	public boolean getIsTrue() {
 		return isTrue;
 	}
 
