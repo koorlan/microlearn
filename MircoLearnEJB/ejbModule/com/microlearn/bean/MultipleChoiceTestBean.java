@@ -31,7 +31,8 @@ public class MultipleChoiceTestBean {
 	public MultipleChoiceTestDto getMCT(int id){
 		try{
 			MultipleChoiceTest mct =  em.find(MultipleChoiceTest.class,id);			
-			return new MultipleChoiceTestDto(mct.getId(),mct.getQuestions(),mct.getAttempts(),mct.getSuccessCondition());
+			return new MultipleChoiceTestDto(mct.getId(),mct.getQuestions(),mct.getAttempts(),
+					mct.getSuccessCondition(), mct.getShowAnswers());
 		}catch (Exception e){
 			return null;
 		}

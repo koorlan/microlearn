@@ -11,7 +11,7 @@ public class Module {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToMany(mappedBy="module", fetch = FetchType.EAGER,cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="module", cascade=CascadeType.REMOVE)
 	private List<Chapter> chapters;
 	
 	@ManyToOne

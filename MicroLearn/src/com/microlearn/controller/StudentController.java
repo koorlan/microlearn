@@ -123,10 +123,10 @@ public class StudentController extends HttpServlet {
 		case "view":
 			int chapterId = Integer.parseInt(request.getParameter("id"));
 			if(serviceModule.canReadChapter(chapterId, student.getLogin())) {
-				boolean isValidate = serviceModule.isChapterValidate(chapterId, student.getLogin());
+				int score = serviceModule.getChapterScore(chapterId, student.getLogin());
 				ChapterDto chapter = serviceChapter.getChapter(chapterId);
 				request.setAttribute("chapter", chapter);
-				request.setAttribute("isValidate", isValidate);
+				request.setAttribute("score", score);
 			}
 			else {
 				goHome(request, response);
@@ -187,10 +187,9 @@ public class StudentController extends HttpServlet {
 				correctAnswers++;
 		}
 		
-		boolean isSuccess = correctAnswers >= mct.getSuccessCondition();
-		serviceChapter.addAttempt(mct.getId(), student.getLogin(), isSuccess);
+		serviceChapter.addAttempt(mct.getId(), student.getLogin(), correctAnswers);
 		
-		request.getRequestDispatcher("StudentController?&todo=naviguate&entity=chapter&action=view&id=" + String.valueOf(chapterId))
+		request.getRequestDispatcher("StudentController?&todo=navigate&entity=chapter&action=view&id=" + String.valueOf(chapterId))
 		.forward(request, response);
 	}
 

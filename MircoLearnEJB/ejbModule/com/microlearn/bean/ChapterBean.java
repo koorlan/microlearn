@@ -92,7 +92,8 @@ public class ChapterBean {
 		try{
 			Chapter chapter = em.find(Chapter.class, chapterId);
 			MultipleChoiceTest data = chapter.getMct();
-			MultipleChoiceTestDto mct = new MultipleChoiceTestDto(data.getId(), data.getQuestions(), data.getAttempts(), data.getSuccessCondition());
+			MultipleChoiceTestDto mct = new MultipleChoiceTestDto(data.getId(), data.getQuestions(),
+					data.getAttempts(), data.getSuccessCondition(), data.getShowAnswers());
 			return mct;
 		}
 		catch (PersistenceException e) {
@@ -100,14 +101,14 @@ public class ChapterBean {
 		}
 	}
 	
-	public void addAttempt(int mctId, String studentLogin, boolean success) {
+	public void addAttempt(int mctId, String studentLogin, int score) {
 		MultipleChoiceTest mct = em.find(MultipleChoiceTest.class, mctId);
 		Student student = (Student) em.find(Account.class, studentLogin);
 		Attempt attempt = new Attempt();
 		attempt.setStudent(student);
 		attempt.setMct(mct);
 		attempt.setDate(new Date());
-		attempt.setSuccess(success);
+		attempt.setScore(score);
 		
 		em.persist(attempt);
 	}

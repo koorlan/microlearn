@@ -29,6 +29,7 @@ public class MultipleChoiceTest {
 	private List<Attempt> attempts;
 	
 	private int successCondition;
+	private boolean showAnswers;
 
 	public int getId() {
 		return id;
@@ -68,5 +69,13 @@ public class MultipleChoiceTest {
 
 	public void setChapter(Chapter chapter) {
 		this.chapter = chapter;
+	}
+
+	public boolean getShowAnswers() {
+		return showAnswers;
+	}
+
+	public void setShowAnswers(boolean showAnswers) {
+		this.showAnswers = showAnswers;
 	}
 }

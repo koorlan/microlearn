@@ -6,13 +6,13 @@ public class AttemptDto {
 
 	private int id;
 	private Date date;	
-	private boolean success;
+	private int score;
 	private String userLogin;
 
-	public AttemptDto(int id, Date date, boolean success, String userLogin) {
+	public AttemptDto(int id, Date date, int score, String userLogin) {
 		this.id = id;
 		this.date = date;
-		this.success = success;
+		this.score = score;
 		this.userLogin = userLogin;
 	}
 
@@ -24,8 +24,8 @@ public class AttemptDto {
 		return date;
 	}
 
-	public boolean isSuccess() {
-		return success;
+	public int getScore() {
+		return score;
 	}
 
 	public String getUserLogin() {
