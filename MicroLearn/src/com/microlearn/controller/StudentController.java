@@ -73,23 +73,25 @@ public class StudentController extends HttpServlet {
 	private void naviguate(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		Student student =  (Student) request.getSession().getAttribute("account");
+		boolean allowRedirect = true;
 		switch(request.getParameter("entity")){
 		case "module":
-			naviguateMenu(request, response, student);
+			allowRedirect = naviguateMenu(request, response, student);
 			break;
 		case "chapter":
-			naviguateChapter(request, response, student);
+			allowRedirect = naviguateChapter(request, response, student);
 			break;
 		default:
 			this.goHome(request, response);
 			return;
 		}
 		
-		request.getRequestDispatcher("/student/" + request.getParameter("entity") 
-		+ "/" + request.getParameter("action") + ".jsp").forward(request, response);
+		if(allowRedirect)
+			request.getRequestDispatcher("/student/" + request.getParameter("entity") 
+			+ "/" + request.getParameter("action") + ".jsp").forward(request, response);
 	}
 
-	private void naviguateMenu(HttpServletRequest request, HttpServletResponse response, Student student) 
+	private boolean naviguateMenu(HttpServletRequest request, HttpServletResponse response, Student student) 
 			throws ServletException, IOException {
 		switch(request.getParameter("action")) {
 		case "view":
@@ -106,31 +108,37 @@ public class StudentController extends HttpServlet {
 				serviceModule.subscribe(moduleId, ((Account)request.getSession().getAttribute("account")).getLogin());
 			}
 			goHome(request, response);
-			return;
+			return false;
 		default:
 			this.goHome(request, response);
-			return;
+			return false;
 		}
+		
+		return true;
 	}
 	
-	private void naviguateChapter(HttpServletRequest request, HttpServletResponse response, Student student) 
+	private boolean naviguateChapter(HttpServletRequest request, HttpServletResponse response, Student student) 
 			throws ServletException, IOException {
 		switch(request.getParameter("action")) {
 		case "view":
 			int chapterId = Integer.parseInt(request.getParameter("id"));
 			if(serviceModule.canReadChapter(chapterId, student.getLogin())) {
+				boolean isValidate = serviceModule.isChapterValidate(chapterId, student.getLogin());
 				ChapterDto chapter = serviceChapter.getChapter(chapterId);
 				request.setAttribute("chapter", chapter);
+				request.setAttribute("isValidate", isValidate);
 			}
 			else {
 				goHome(request, response);
-				return;
+				return false;
 			}
 			break;
 		default:
 			goHome(request, response);
-			return;
+			return false;
 		}
+		
+		return true;
 	}
 	
 	private void goHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -169,7 +177,7 @@ public class StudentController extends HttpServlet {
 		for(QuestionDto question : mct.getQuestions()) {    // For each question of the mct
 			boolean isIncorrect = false;					// if at least one bad answer is
 			for(AnswerDto answer : question.getAnswers()) { // selected, then the question
-				if(!answer.isTrue()) {						// is not properly answered
+				if(!answer.getIsTrue()) {					// is not properly answered
 					if(request.getParameter("answer-" + String.valueOf(answer.getId())) != null &&
 							request.getParameter("answer-" + String.valueOf(answer.getId())).equals("on"))
 						isIncorrect = true;
