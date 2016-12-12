@@ -35,35 +35,28 @@
 	</div>
 
 	<br>
-
-
-	<h1>Teacher Page</h1>
-
-<div id='outEle'>
-
-</div>
 	<div class="row">
-		<div class="large-10 medium-10 columns">
-			Related Multiple Choice Test
-			Name : <a class="button float-right"
-				href="${root}/TeacherController?&todo=navigate&entity=mct&action=view&id=${chapter.mct.id}">View</a>
-			<a class="button float-right"
-				href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
-			<a class="alert button float-right"
-				href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
-		</div>
-		<div class="large-10 medium-10 columns">
-		<div class="large-8 medium-8 columns">
-		<div id='titleOUT'></div>
-		</div>
-		<div class="large-4 medium-4 columns">
-			<a class="button"
-				href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
-			<a class="alert button "
-				href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
-		</div>
+		<div class="callout">
+			<div id='titleOUT'></div>
 		</div>
 	</div>
+	<div class="row">
+		<a class="button"
+			href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit
+			Chapter</a>
+		<c:choose>
+			<c:when test="${not empty chapter.mct.id}">
+				<a class="button"
+					href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit
+					MCT</a>
+			</c:when>
+			<c:otherwise>
+				<a class="button success" href="${root}/TeacherController?&todo=navigate&entity=mct&action=add&chapter_id=${chapter.id}">Add MCT</a>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+
 	<div class="row">
 		<div id='contentOUT'></div>
 	</div>

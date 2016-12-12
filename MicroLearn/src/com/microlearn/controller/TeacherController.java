@@ -183,6 +183,7 @@ public class TeacherController extends HttpServlet {
 						case "add":
 							if(request.getParameter("module_id") != null){
 								request.setAttribute("module_id", Integer.parseInt(request.getParameter("module_id")));
+								
 							}else{
 								this.goHome(request, response);
 								return;
@@ -213,6 +214,12 @@ public class TeacherController extends HttpServlet {
 							}
 							break;
 						case "add":
+							if(request.getParameter("chapter_id") != null){
+								request.setAttribute("chapter_id", Integer.parseInt(request.getParameter("chapter_id")));
+							}else{
+								this.goHome(request, response);
+								return;
+							}
 							break;
 						case "delete":
 							break;

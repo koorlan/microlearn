@@ -37,8 +37,7 @@
 	<br>
 
 
-	<h1>Teacher Page</h1>
-
+	
 
 
 	<div class="row"></div>
