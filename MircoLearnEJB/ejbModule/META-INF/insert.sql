@@ -37,7 +37,8 @@ VALUES
 (1, 'How are you ?', 1),
 (2, 'What is your name ?', 1),
 (3, 'How are you ?', 2),
-(4, 'What is your name ?', 2);
+(4, 'What is your name ?', 2),
+(5, 'Number of perfect silces for a pizza', 1);
 
 INSERT INTO ANSWER (id, istrue, text, question_id)
 VALUES
@@ -48,7 +49,12 @@ VALUES
 (5, 1, 'Anthony', 2),
 (6, 1, 'Anthony', 4),
 (7, 0, 'Roger', 2),
-(8, 0, 'Roger', 4);
+(8, 0, 'Roger', 4),
+(9, 0, '1', 5),
+(10, 0, '2', 5),
+(11, 0, '3', 5),
+(12, 0, '4', 5),
+(13, 1, 'We don t care it s a pizza', 5);
 
 INSERT INTO ATTEMPT (id, date, success, mct_id, student_login)
 VALUES

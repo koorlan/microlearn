@@ -42,6 +42,8 @@
 			<div class="row column">
 				<form action="TeacherController">
 					<h4 class="text-center">Edit Chapter</h4>
+					 <a class="alert button "
+				href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete Chapter</a> 
 					<div class="large-12 columns">
 						<div class="input text">
 							<label for="username">Title</label> <input placeholder="title..."

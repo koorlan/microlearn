@@ -15,6 +15,8 @@ import com.microlearn.bean.ModuleBean;
 import com.microlearn.bean.MultipleChoiceTestBean;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
+import com.microlearn.entity.MultipleChoiceTest;
+import com.microlearn.entity.Question;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
@@ -98,8 +100,12 @@ public class TeacherController extends HttpServlet {
 					int module_id = Integer.parseInt(request.getParameter("module_id"));			
 					int position = this.serviceModule.getModule(module_id).getChapters().size()+1;				
 					Chapter chapter = this.serviceChapter.createChapter(title, content, module_id, position);
-					request.setAttribute("chapter", this.serviceChapter.getChapter(chapter.getId()));
-					request.getRequestDispatcher("/teacher/chapter/view.jsp").forward(request, response);
+					
+					MultipleChoiceTest mct = this.serviceMct.createMCT(chapter.getId(), 0);
+					//this.serviceChapter.updateMct(chapter.getId(), mct);
+					
+					request.setAttribute("mct", this.serviceMct.getMCT(mct.getId()));
+					request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
 				}
 				break;
 			case "chapter_delete":
@@ -131,14 +137,33 @@ public class TeacherController extends HttpServlet {
 					
 				}
 				break;
-			case "mct_add":
-
-				break;
 			case "mct_delete":
-
+				
 				break;
 			case "mct_edit":
-
+				
+				break;
+			case "question_add":
+				if(request.getParameter("mct_id")!=null && !request.getParameter("0").isEmpty() && !request.getParameter("question").isEmpty()){
+					int mct_id = Integer.parseInt(request.getParameter("mct_id"));
+					int answer_counter = Integer.parseInt(request.getParameter("answer_counter"));
+					
+					String questionText = request.getParameter("question");
+					Question q = this.serviceMct.createQuestion(mct_id,questionText);
+					
+					for(int i=0; i<answer_counter;i++){
+						if(!request.getParameter(Integer.toString(i)).isEmpty()){
+							boolean isTrue = false;
+							if( request.getParameter(Integer.toString(i)+"_t")!=null && request.getParameter(Integer.toString(i)+"_t").equals("on")){
+								isTrue = true;
+							}
+							this.serviceMct.createAnswer(q.getId(),request.getParameter(Integer.toString(i)),isTrue);
+						}
+					}
+					MultipleChoiceTestDto mct = this.serviceMct.getMCT(mct_id);
+					request.setAttribute("mct", mct);
+					request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
+				}
 				break;
 			case "navigate":
 				if(request.getParameter("entity")!=null && request.getParameter("action")!= null){
@@ -213,10 +238,23 @@ public class TeacherController extends HttpServlet {
 							}
 							break;
 						case "add":
+							if(request.getParameter("chapter_id") != null){
+								request.setAttribute("chapter_id", Integer.parseInt(request.getParameter("chapter_id")));
+							}else{
+								this.goHome(request, response);
+								return;
+							}
 							break;
 						case "delete":
 							break;
 						case "edit":
+							if(request.getParameter("id") !=null){
+								int id = Integer.parseInt(request.getParameter("id"));
+								if(serviceMct.canAccess(id, teacher.getLogin())) {
+									MultipleChoiceTestDto mct = this.serviceMct.getMCT(id);
+									request.setAttribute("mct", mct);
+								}
+							}
 							break;
 						default:
 							this.goHome(request, response);
@@ -253,6 +291,7 @@ public class TeacherController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 

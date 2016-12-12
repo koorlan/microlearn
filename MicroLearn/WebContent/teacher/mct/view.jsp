@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MicroLearn Test Page</title>
+<title>View MCT - MicroLearn</title>
 <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
 <link rel="stylesheet" href="${root}/foundation/css/app.css">
 <link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
