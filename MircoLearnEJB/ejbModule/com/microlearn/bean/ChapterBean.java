@@ -77,6 +77,17 @@ public class ChapterBean {
 		}
 	}
 	
+	public boolean updateMct(int id, MultipleChoiceTest mct){
+		try{
+			Chapter chapter = em.find(Chapter.class, id);
+			chapter.setMct(mct);
+			return true;
+		}
+		catch (PersistenceException e) {
+			return false;
+		}
+	}
+	
 	public MultipleChoiceTestDto getMct(int chapterId) {
 		try{
 			Chapter chapter = em.find(Chapter.class, chapterId);

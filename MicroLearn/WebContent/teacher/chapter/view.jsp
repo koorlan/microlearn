@@ -47,7 +47,7 @@
 		<c:choose>
 			<c:when test="${not empty chapter.mct.id}">
 				<a class="button"
-					href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit
+					href="${root}/TeacherController?&todo=navigate&entity=mct&action=edit&id=${chapter.mct.id}">Edit
 					MCT</a>
 			</c:when>
 			<c:otherwise>

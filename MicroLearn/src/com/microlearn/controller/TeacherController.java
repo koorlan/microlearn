@@ -15,6 +15,7 @@ import com.microlearn.bean.ModuleBean;
 import com.microlearn.bean.MultipleChoiceTestBean;
 import com.microlearn.entity.Chapter;
 import com.microlearn.entity.Module;
+import com.microlearn.entity.MultipleChoiceTest;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
@@ -98,8 +99,12 @@ public class TeacherController extends HttpServlet {
 					int module_id = Integer.parseInt(request.getParameter("module_id"));			
 					int position = this.serviceModule.getModule(module_id).getChapters().size()+1;				
 					Chapter chapter = this.serviceChapter.createChapter(title, content, module_id, position);
-					request.setAttribute("chapter", this.serviceChapter.getChapter(chapter.getId()));
-					request.getRequestDispatcher("/teacher/chapter/view.jsp").forward(request, response);
+					
+					MultipleChoiceTest mct = this.serviceMct.createMCT(chapter.getId(), 0);
+					//this.serviceChapter.updateMct(chapter.getId(), mct);
+					
+					request.setAttribute("mct", this.serviceMct.getMCT(mct.getId()));
+					request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
 				}
 				break;
 			case "chapter_delete":
@@ -183,7 +188,6 @@ public class TeacherController extends HttpServlet {
 						case "add":
 							if(request.getParameter("module_id") != null){
 								request.setAttribute("module_id", Integer.parseInt(request.getParameter("module_id")));
-								
 							}else{
 								this.goHome(request, response);
 								return;
@@ -224,6 +228,13 @@ public class TeacherController extends HttpServlet {
 						case "delete":
 							break;
 						case "edit":
+							if(request.getParameter("id") !=null){
+								int id = Integer.parseInt(request.getParameter("id"));
+								if(serviceMct.canAccess(id, teacher.getLogin())) {
+									MultipleChoiceTestDto mct = this.serviceMct.getMCT(id);
+									request.setAttribute("mct", mct);
+								}
+							}
 							break;
 						default:
 							this.goHome(request, response);
@@ -260,6 +271,7 @@ public class TeacherController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 

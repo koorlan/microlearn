@@ -16,10 +16,13 @@ public class MultipleChoiceTestBean {
 	@PersistenceContext(unitName="MicroLearn")
 	private EntityManager em;
 
-	public void createMCT(int chapterId, int successCondition){
+	public MultipleChoiceTest createMCT(int chapterId, int successCondition){
 		MultipleChoiceTest mct =new MultipleChoiceTest();
 		mct.setChapter(em.find(Chapter.class,chapterId));
 		mct.setSuccessCondition(successCondition);
+		
+		em.persist(mct);
+		return mct;
 	}
 	
 	public MultipleChoiceTestDto getMCT(int id){
