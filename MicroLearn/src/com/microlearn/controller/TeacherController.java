@@ -141,7 +141,18 @@ public class TeacherController extends HttpServlet {
 				
 				break;
 			case "mct_edit":
-				
+				if(request.getParameter("id")!=null && request.getParameter("success_condition")!=null){
+					int id = Integer.parseInt(request.getParameter("id"));
+					int success_condition = Integer.parseInt(request.getParameter("success_condition"));
+					
+					if(this.serviceMct.updateSuccessCondition(id,success_condition) && this.serviceMct.canAccess(id, teacher.getLogin()) ){
+						
+						request.setAttribute("mct", this.serviceMct.getMCT(id));
+						request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
+					}else{
+						this.goHome(request, response);
+					}
+				}
 				break;
 			case "question_add":
 				if(request.getParameter("mct_id")!=null && !request.getParameter("0").isEmpty() && !request.getParameter("question").isEmpty()){
@@ -163,6 +174,8 @@ public class TeacherController extends HttpServlet {
 					MultipleChoiceTestDto mct = this.serviceMct.getMCT(mct_id);
 					request.setAttribute("mct", mct);
 					request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
+				}else{
+					this.goHome(request, response);
 				}
 				break;
 			case "navigate":
@@ -228,25 +241,6 @@ public class TeacherController extends HttpServlet {
 						break;
 					case "mct":
 						switch(request.getParameter("action")){
-						case "view":
-							if(request.getParameter("id") !=null){
-								int id = Integer.parseInt(request.getParameter("id"));
-								if(serviceMct.canAccess(id, teacher.getLogin())) {
-									MultipleChoiceTestDto mct = this.serviceMct.getMCT(id);
-									request.setAttribute("mct", mct);
-								}
-							}
-							break;
-						case "add":
-							if(request.getParameter("chapter_id") != null){
-								request.setAttribute("chapter_id", Integer.parseInt(request.getParameter("chapter_id")));
-							}else{
-								this.goHome(request, response);
-								return;
-							}
-							break;
-						case "delete":
-							break;
 						case "edit":
 							if(request.getParameter("id") !=null){
 								int id = Integer.parseInt(request.getParameter("id"));
