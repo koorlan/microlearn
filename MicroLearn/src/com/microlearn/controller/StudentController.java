@@ -174,16 +174,26 @@ public class StudentController extends HttpServlet {
 			return;
 		}
 		int correctAnswers = 0;
-		for(QuestionDto question : mct.getQuestions()) {    // For each question of the mct
-			boolean isIncorrect = false;					// if at least one bad answer is
-			for(AnswerDto answer : question.getAnswers()) { // selected, then the question
-				if(!answer.getIsTrue()) {					// is not properly answered
-					if(request.getParameter("answer-" + String.valueOf(answer.getId())) != null &&
-							request.getParameter("answer-" + String.valueOf(answer.getId())).equals("on"))
-						isIncorrect = true;
-				}
+		/*
+		 * If at least one bad answer has been checked,
+		 * then the question is invalid.
+		 * At least one good answer has to be
+		 * check to validate the question but some
+		 * good answers can be left unchecked.
+		 */
+		for(QuestionDto question : mct.getQuestions()) { 
+			boolean isIncorrect = false;
+			boolean hasAnswered = false;
+			for(AnswerDto answer : question.getAnswers()) {
+				if(request.getParameter("answer-" + String.valueOf(answer.getId())) == null)
+					break;
+				boolean isChecked = request.getParameter("answer-" + String.valueOf(answer.getId())).equals("on");
+				if(isChecked && !answer.getIsTrue())
+					isIncorrect = true;
+				else
+					hasAnswered = true;				
 			}
-			if(!isIncorrect)
+			if(!isIncorrect && hasAnswered)
 				correctAnswers++;
 		}
 		
