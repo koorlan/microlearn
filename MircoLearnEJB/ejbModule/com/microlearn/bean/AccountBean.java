@@ -46,9 +46,13 @@ public class AccountBean {
 	}
 	
 	public StudentDto getStudent(Account acc) {
-		Student s = (Student) em.find(Account.class, acc.getLogin());
+		return getStudent(acc.getLogin());
+	}
+	
+	public StudentDto getStudent(String login) {
+		Student s = (Student) em.find(Account.class, login);
 		if(s != null)
-			return new StudentDto(s.getLogin(), s.getFirstName(), s.getLastName(), s.getFollowedModules());
+			return new StudentDto(s.getLogin(), s.getFirstName(), s.getLastName(), s.getFollowedModules(), s.getAttempts());
 		return null;
 	}
 	

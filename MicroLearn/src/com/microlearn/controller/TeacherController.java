@@ -1,6 +1,7 @@
 package com.microlearn.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
 import com.microlearn.entity.dto.MultipleChoiceTestDto;
+import com.microlearn.entity.dto.StudentDto;
 import com.microlearn.entity.dto.TeacherDto;
 
 /**
@@ -77,6 +79,7 @@ public class TeacherController extends HttpServlet {
 						this.serviceModule.delete(removed_module.getId());
 					}
 					this.goHome(request, response);
+					return;
 				}
 				break;
 			case "module_edit":
@@ -89,6 +92,7 @@ public class TeacherController extends HttpServlet {
 						request.getRequestDispatcher("/teacher/module/view.jsp").forward(request, response);
 					}else{
 						this.goHome(request, response);
+						return;
 					}
 					
 				}
@@ -133,6 +137,7 @@ public class TeacherController extends HttpServlet {
 						request.getRequestDispatcher("/teacher/chapter/view.jsp").forward(request, response);
 					}else{
 						this.goHome(request, response);
+						return;
 					}
 					
 				}
@@ -151,6 +156,7 @@ public class TeacherController extends HttpServlet {
 						request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
 					}else{
 						this.goHome(request, response);
+						return;
 					}
 				}
 				break;
@@ -176,6 +182,7 @@ public class TeacherController extends HttpServlet {
 					request.getRequestDispatcher("/teacher/mct/edit.jsp").forward(request, response);
 				}else{
 					this.goHome(request, response);
+					return;
 				}
 				break;
 			case "navigate":
@@ -188,7 +195,9 @@ public class TeacherController extends HttpServlet {
 								int id =Integer.parseInt(request.getParameter("id"));
 								ModuleDto module = this.serviceModule.getModule(id);
 								if(module.getTeacher().getLogin().equals(this.serviceAccount.getTeacher(teacher).getLogin())){
+									List<StudentDto> students = serviceModule.getStudents(id);
 									request.setAttribute("module",module);
+									request.setAttribute("students", students);
 								}
 							}
 							break;
@@ -205,6 +214,7 @@ public class TeacherController extends HttpServlet {
 							break;
 						default:
 							this.goHome(request, response);
+							return;
 						}
 						break;
 					case "chapter":
@@ -237,6 +247,7 @@ public class TeacherController extends HttpServlet {
 							break;
 						default:
 							this.goHome(request, response);
+							return;
 						}
 						break;
 					case "mct":
@@ -252,11 +263,28 @@ public class TeacherController extends HttpServlet {
 							break;
 						default:
 							this.goHome(request, response);
+							return;
+						}
+						break;
+					case "student":
+						switch(request.getParameter("action")) {
+						case "view":
+							if(request.getParameter("id") != null
+							&& request.getParameter("login") != null){
+								int id = Integer.parseInt(request.getParameter("id"));
+								String login = request.getParameter("login");
+								StudentDto student = serviceModule.getStudent(login, id);
+								request.setAttribute("student", student);
+							}
+							break;
+						default:
+							this.goHome(request, response);
+							return;
 						}
 						break;
 					default:
 						this.goHome(request, response);
-						break;
+						return;
 					}
 					request.getRequestDispatcher("/teacher/"+request.getParameter("entity") + "/" + request.getParameter("action") +".jsp").forward(request, response);
 				}else{

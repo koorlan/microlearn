@@ -20,6 +20,7 @@ import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.AttemptDto;
 import com.microlearn.entity.dto.ChapterDto;
 import com.microlearn.entity.dto.ModuleDto;
+import com.microlearn.entity.dto.StudentDto;
 
 @LocalBean
 @Stateless
@@ -148,4 +149,39 @@ public class ModuleBean {
 		return score;
 	}
 	
+	public List<StudentDto> getStudents(int moduleId) {
+		Module module = em.find(Module.class, moduleId);
+		List<Student> list = module.getFollowers();
+		
+		List<StudentDto> students = new ArrayList<StudentDto>();
+		for(Student student : list) {
+			StudentDto dto = new StudentDto(student.getLogin(), student.getFirstName(), student.getLastName(),
+					student.getFollowedModules(), student.getAttempts());
+			dto.setLastSuccess(this.getLastSuccess(moduleId, student.getLogin()));
+			students.add(dto);
+		}
+		return students;
+	}
+	
+	public StudentDto getStudent(String login, int moduleId) {
+		Student data = em.find(Student.class, login);
+		StudentDto student = new StudentDto(data.getLogin(), data.getFirstName(), data.getLastName(),
+				data.getFollowedModules(), data.getAttempts());
+		Module module = em.find(Module.class, moduleId);
+		int lastSuccess = getLastSuccess(moduleId, login);
+		student.setLastSuccess(lastSuccess);
+		
+		for(Chapter chapter : module.getChapters()) {
+			if(chapter.getPosition() <= lastSuccess) {
+				List<Attempt> attempts = em.createQuery("Select a From Attempt a Where mct = :mct And student = :student Order By DATE")
+						.setParameter("mct", chapter.getMct()).setParameter("student", data).getResultList();
+				Attempt success = null;
+				if(attempts.get(attempts.size() - 1).getScore() >= chapter.getMct().getSuccessCondition())
+					success = attempts.get(attempts.size() - 1);
+				student.addResult(chapter.getId(), attempts.size(), success);
+			}
+		}
+		
+		return student;
+	}
 }

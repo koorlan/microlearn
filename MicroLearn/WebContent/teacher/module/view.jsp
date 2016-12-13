@@ -63,6 +63,24 @@
 </div>
 </div>
 
+	<div class="row">
+		<h4>Enrolled students</h4>
+		<ul>
+			<c:forEach items="${ students }" var="student">
+				<li>
+					<div class="row callout">
+	                  <div class="large-4 columns clearfix">
+	                    <a href="${root}/TeacherController?&todo=navigate&entity=student&action=view&id=${ module.id }&login=${student.login}">${student.firstName} ${ student.lastName }</a>
+	                  </div>
+	                  <div class="large-4 columns clearfix">
+	                  	<strong>Current chapter: #${ student.lastSuccess }</strong>
+	                  </div>
+            		</div>
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
+
 
 	<div class="row">
 	<a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
