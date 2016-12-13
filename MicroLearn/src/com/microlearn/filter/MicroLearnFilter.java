@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.microlearn.entity.Account;
 import com.microlearn.type.TAccount;
 
@@ -32,7 +34,6 @@ public  class MicroLearnFilter  implements Filter {
 
         HttpSession session = request.getSession();
         String path = ((HttpServletRequest) request).getRequestURI();
-        
         //allow css, js and custom jsp
         if (path.startsWith(request.getContextPath()+"/foundation")) {
             chain.doFilter(request, response);
@@ -62,7 +63,9 @@ public  class MicroLearnFilter  implements Filter {
 				case TAccount.TEACHER:
 					request.getRequestDispatcher("/teacher").forward(request, response);
 					return;
-					// TODO : Admin ? lol TAccount.ADMIN
+				case TAccount.ADMIN:
+					request.getRequestDispatcher("/admin").forward(request, response);
+					return;
 				default:
 					//Why are we here  ? :p
 					request.getRequestDispatcher("/default/login.jsp").forward(request, response);

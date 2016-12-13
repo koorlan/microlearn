@@ -11,27 +11,27 @@
 <title>View Module - MicroLearn</title>
 <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
 <link rel="stylesheet" href="${root}/foundation/css/app.css">
-<link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
+<link rel="stylesheet"
+	href="${root}/foundation/font-awesome/css/font-awesome.css">
 </head>
 <body>
 
-<div class="top-bar">
-     <div class="top-bar-left">
-        <ul class="menu" data-dropdown-menu>
-          <li class="menu-text">MicroLearn</li>
-          <li>
-          <a href="${root}"><i class="fa fa-home fa-lg"></i></a>	
-		</li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="menu">
-          <li>Hello ${account.firstName}  ${account.lastName}</li>
-          <li><a href="#">(manage)</a></li>
-          <li> <a class="alert button float-right" href=${root}/DefaultController?&todo=log_out">Disconnect</a></li>
-        </ul>
-      </div>
-    </div>
+	<div class="top-bar">
+		<div class="top-bar-left">
+			<ul class="menu" data-dropdown-menu>
+				<li class="menu-text">MicroLearn</li>
+				<li><a href="${root}"><i class="fa fa-home fa-lg"></i></a></li>
+			</ul>
+		</div>
+		<div class="top-bar-right">
+			<ul class="menu">
+				<li>Hello ${account.firstName} ${account.lastName}</li>
+				<li><a href="#">(manage)</a></li>
+				<li><a class="alert button float-right"
+					href=${root}/DefaultController?&todo=log_out">Disconnect</a></li>
+			</ul>
+		</div>
+	</div>
 
 	<br>
 
@@ -40,33 +40,38 @@
 	<h2>${module.title}</h2>
 	<h3>${module.content}</h3>
 
-<div class="row">
-        <div class="large-8 columns large-offset-2 medium-8 medium-offset-2">
-			<a class="button" href="${root}/TeacherController?&todo=navigate&entity=chapter&action=add&module_id=${module.id}" >New Chapter</a>
-			
-			<c:forEach items="${module.chapters}" var="chapter">
-				
-			<div class="row callout">
-                  <div class="large-4 medium-4 columns clearfix">
-                    <a href="${root}/TeacherController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
-                    <br>
-                    Description : ${chapter.content}
-                  </div>
+	<div class="row">
+		<div class="large-8 columns large-offset-2 medium-8 medium-offset-2">
+			<a class="button"
+				href="${root}/TeacherController?&todo=navigate&entity=chapter&action=add&module_id=${module.id}">New
+				Chapter</a>
 
-                  <div class="large-4 medium-4 columns">
-                    <a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
-                    <a class="alert button float-right" href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
-                  </div>
-            </div>
-			
-		</c:forEach>
-</div>
-</div>
+			<c:forEach items="${module.chapters}" var="chapter">
+
+				<div class="row callout">
+					<div class="large-4 medium-4 columns clearfix">
+						<a
+							href="${root}/TeacherController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
+					</div>
+
+					<div class="large-4 medium-4 columns">
+						<a class="button float-right"
+							href="${root}/TeacherController?&todo=navigate&entity=chapter&action=edit&id=${chapter.id}">Edit</a>
+						<a class="alert button float-right"
+							href="${root}/TeacherController?&todo=chapter_delete&id=${chapter.id}">Delete</a>
+					</div>
+				</div>
+
+			</c:forEach>
+		</div>
+	</div>
 
 
 	<div class="row">
-	<a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
-     <a class="alert button float-right" href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>
+		<a class="button float-right"
+			href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
+		<a class="alert button float-right"
+			href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>
 	</div>
 
 

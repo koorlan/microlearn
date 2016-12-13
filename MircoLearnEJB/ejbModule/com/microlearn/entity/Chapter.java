@@ -16,6 +16,7 @@ public class Chapter {
 	private MultipleChoiceTest mct;
 	
 	private String title;
+	@Column(columnDefinition="text")
 	private String content;
 	private int position;
 	
