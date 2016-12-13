@@ -16,6 +16,7 @@ import com.microlearn.bean.ModuleBean;
 import com.microlearn.entity.Teacher;
 import com.microlearn.type.TAccount;
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Admin;
 import com.microlearn.entity.Student;
 
 
@@ -70,6 +71,10 @@ public class DefaultController extends HttpServlet {
 				else if(acc.getType().equals(TAccount.STUDENT)) {
 					request.getSession().setAttribute("account", (Student) acc);
 					response.sendRedirect(request.getContextPath() + "/student");
+				}
+				else if(acc.getType().equals(TAccount.ADMIN)) {
+					request.getSession().setAttribute("account", (Admin) acc);
+					response.sendRedirect(request.getContextPath() + "/admin");
 				}
 				else
 					response.sendRedirect(request.getContextPath());
