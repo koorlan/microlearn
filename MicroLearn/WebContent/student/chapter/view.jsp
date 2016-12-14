@@ -8,35 +8,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>View Chapter - MicroLearn</title>
+<title>Chapter ${ chapter.title } - MicroLearn</title>
 <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
 <link rel="stylesheet" href="${root}/foundation/css/app.css">
 <link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
 </head>
 <body>
 
-<div class="top-bar">
-     <div class="top-bar-left">
+	<div class="top-bar">
+      <div class="top-bar-left">
         <ul class="menu" data-dropdown-menu>
           <li class="menu-text">MicroLearn</li>
           <li>
-          <a href="${pageContext.request.contextPath}"><i class="fa fa-home fa-lg"></i></a>	
+          <a href="${root}"><i class="fa fa-home fa-lg"></i></a>	
 		</li>
         </ul>
       </div>
       <div class="top-bar-right">
         <ul class="menu">
-          <li>Hello ${account.firstName}  ${account.lastName}</li>
-          <li><a href="#">(manage)</a></li>
-          <li> <a class="alert button float-right" href="${pageContext.request.contextPath}/DefaultController?&todo=log_out">Disconnect</a></li>
+          <li><p>Hello ${account.firstName}  ${account.lastName}</p></li>
+          <li><a class="alert button float-right" href="${root}/DefaultController?&todo=log_out">Disconnect</a></li>
         </ul>
       </div>
     </div>
 
 	<div class="row">
 		<div class="large-8 large-offset-2 columns">
-			<h1>${chapter.title}</h1>
-			<p>${chapter.content}</p>
+			<div class="row">
+				<h1 class="large-6 medium-6 columns">Chapter ${chapter.title}</h1>
+				<div class="large-6 medium-6 columns">
+					<br/>
+					<a href="${root}/StudentController?&todo=navigate&entity=module&action=view&id=${ chapter.moduleId }" class="button">Module summary</a>
+				</div>
+			</div>
+			<p class="text-center">${chapter.content}</p>
 			<c:if test="${chapter.hasMCT }">
 				<em>Good answers required to success the test: ${chapter.mct.successCondition}</em>
 				<c:if test="${ score > -1 }">

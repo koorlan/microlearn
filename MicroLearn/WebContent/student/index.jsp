@@ -8,15 +8,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>MicroLearn Test Page</title>
+<title>${account.login } dashboard - MicroLearn</title>
     <link rel="stylesheet" href="${root}/foundation/css/foundation.css">
 	<link rel="stylesheet" href="${root}/foundation/css/app.css">
 	<link rel="stylesheet" href="${root}/foundation/font-awesome/css/font-awesome.css">
 </head>
 <body>
+	<div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu" data-dropdown-menu>
+          <li class="menu-text">MicroLearn</li>
+          <li>
+          <a href="${root}"><i class="fa fa-home fa-lg"></i></a>	
+		</li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li><p>Hello ${account.firstName}  ${account.lastName}</p></li>
+          <li> <a class="alert button float-right" href="${root}/DefaultController?&todo=log_out">Disconnect</a></li>
+        </ul>
+      </div>
+    </div>
 	<div class="row">
 		<div class="large-8 columns large-offset-2 text-center">
-			<h1>Student Page</h1>
+			<h1>${account.login } dashboard</h1>
 		</div>
 		<div class="large-6 columns">
 			<h2>All modules</h2>

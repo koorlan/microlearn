@@ -12,8 +12,9 @@ public class ChapterDto {
 	private String title;
 	private String content;
 	private int position;
+	private int moduleId;
 	
-	public ChapterDto(int id, Module module, String title, String content, int position, MultipleChoiceTest mct) {
+	public ChapterDto(int id, Module module, String title, String content, int position, MultipleChoiceTest mct, int moduleId) {
 		super();
 		this.id = id;
 		this.module = module;
@@ -29,6 +30,7 @@ public class ChapterDto {
 			this.mct = null;
 			hasMCT = false;
 		}
+		this.moduleId = moduleId;
 	}
 
 	public int getId() {
@@ -70,5 +72,9 @@ public class ChapterDto {
 
 	public boolean getHasMCT() {
 		return hasMCT;
+	}
+
+	public int getModuleId() {
+		return moduleId;
 	}
 }

@@ -27,7 +27,7 @@ public class ChapterBean {
 	public ChapterDto getChapter(int id) {
 		Chapter chapter = em.find(Chapter.class, id);
 		return new ChapterDto(chapter.getId(),chapter.getModule(),chapter.getTitle(),
-				chapter.getContent(),chapter.getPosition(), chapter.getMct());
+				chapter.getContent(),chapter.getPosition(), chapter.getMct(), chapter.getModule().getId());
 	}
 	
 	public Chapter createChapter(String title, String content, int moduleId, int position) {

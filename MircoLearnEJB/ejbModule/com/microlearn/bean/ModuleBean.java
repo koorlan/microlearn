@@ -126,6 +126,8 @@ public class ModuleBean {
 	public boolean canReadChapter(int chapterId, String studentLogin) {
 		Chapter chapter = em.find(Chapter.class, chapterId);
 		int lastSuccess = getLastSuccess(chapter.getModule().getId(), studentLogin);
+		if(lastSuccess == -1)
+			lastSuccess = 0;
 		return chapter.getPosition() <= lastSuccess + 1;
 	}
 	

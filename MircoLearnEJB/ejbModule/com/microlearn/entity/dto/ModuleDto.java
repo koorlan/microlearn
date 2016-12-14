@@ -20,7 +20,7 @@ public class ModuleDto {
 		this.id = id;
 		this.chapters = new ArrayList<ChapterDto>();
 		for(Chapter c: chapters){
-			this.chapters.add(new ChapterDto(c.getId(),c.getModule(),c.getTitle(),c.getContent(),c.getPosition(), c.getMct()));
+			this.chapters.add(new ChapterDto(c.getId(),c.getModule(),c.getTitle(),c.getContent(),c.getPosition(), c.getMct(), id));
 		}
 		this.title = title;
 		this.content = content;

@@ -99,6 +99,8 @@ public class StudentController extends HttpServlet {
 				ModuleDto module = serviceModule.getModule(Integer.parseInt(request.getParameter("id")));
 				int lastSuccess = serviceModule.getLastSuccess(module.getId(), student.getLogin());
 				request.setAttribute("module", module);
+				if(lastSuccess == -1)
+					lastSuccess = 0;
 				request.setAttribute("lastSuccess", lastSuccess);
 			}
 			break;

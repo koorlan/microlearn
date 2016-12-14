@@ -76,7 +76,7 @@
 	                    <a href="${root}/TeacherController?&todo=navigate&entity=student&action=view&id=${ module.id }&login=${student.login}">${student.firstName} ${ student.lastName }</a>
 	                  </div>
 	                  <div class="large-4 columns clearfix">
-	                  	<strong>Current chapter: #${ student.lastSuccess }</strong>
+	                  	<strong>Current chapter: #${ student.lastSuccess + 1}</strong>
 	                  </div>
             		</div>
 				</li>
