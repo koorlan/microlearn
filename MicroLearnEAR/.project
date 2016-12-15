@@ -3,8 +3,8 @@
 	<name>MicroLearnEAR</name>
 	<comment></comment>
 	<projects>
+		<project>MicroLearnEJB</project>
 		<project>MicroLearn</project>
-		<project>MircoLearnEJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
