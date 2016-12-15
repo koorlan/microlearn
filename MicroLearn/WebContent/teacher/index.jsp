@@ -47,9 +47,7 @@
                     <br>
                     Description : ${module.content}
                   </div>
-                   <div class="large-4 medium-4 columns clearfix">
-                    This modules is followed by :  <a href="${root}/TeacherController?&todo=navigate&entity=module&action=view&id=${module.id}">student count</a>
-                  </div>
+
                   <div class="large-4 medium-4 columns">
                     <a class="button float-right" href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
                     <a class="alert button float-right" href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>
