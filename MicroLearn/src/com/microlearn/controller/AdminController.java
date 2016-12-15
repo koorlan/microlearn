@@ -32,25 +32,27 @@ public class AdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(request.getAttribute("todo") != null && request.getAttribute("todo").equals("account_add")){
-			if(request.getAttribute("login") != null && request.getAttribute("password") != null && request.getAttribute("firstname") != null && request.getAttribute("lastname") != null && request.getAttribute("acc_type") != null){
-				String login = (String)request.getAttribute("login");
-				String password = (String)request.getAttribute("password");
-				String firstname = (String)request.getAttribute("firstname");
-				String lastname = (String)request.getAttribute("lastname");
+		if(request.getParameter("todo") != null && request.getParameter("todo").equals("account_add")){
+			if(		request.getParameter("login") != null && 
+					request.getParameter("password") != null &&
+					request.getParameter("firstname") != null &&
+					request.getParameter("lastname") != null){
+
+				String login = (String)request.getParameter("login");
+				String password = (String)request.getParameter("password");
+				String firstname = (String)request.getParameter("firstname");
+				String lastname = (String)request.getParameter("lastname");
 				
 				
-				String acc_type = (String) request.getAttribute("acc_type");
+				String acc_type = (String) request.getParameter("acc_type");
 				switch(acc_type){
 				case com.microlearn.type.TAccount.ADMIN:
-					//TODO DANS ACCOUNT BEAN CREATION ADMIN
+					this.serviceAccount.addAdmin(login, password, firstname, lastname);
 					break;
 				case com.microlearn.type.TAccount.STUDENT:
-					//TODO ATTENTION SHA256
 					this.serviceAccount.addStudent(login, password, firstname, lastname);
 					break;
 				case com.microlearn.type.TAccount.TEACHER:
-					//TODO ATTENTION SHA256
 					this.serviceAccount.addTeacher(login, password, firstname, lastname);
 					break;
 				default:

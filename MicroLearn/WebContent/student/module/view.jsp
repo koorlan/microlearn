@@ -45,8 +45,7 @@
 					       	<div class="row callout success">
 						       <div class="large-12 medium-12 columns clearfix">
 				                    <a href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
-				                    <br>
-				                    Description : ${chapter.content}
+				                    
 			                  </div>
 			            	</div>
 					    </c:when>
@@ -54,8 +53,6 @@
 					    	<div class="row callout">
 						       <div class="large-6 medium-6 columns clearfix">
 				                    <a href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">${chapter.title}</a>
-				                    <br>
-				                    Description : ${chapter.content}
 			                  </div>
 			                  <div class="large-6 medium-6 columns clearfix">
 				                    <a class="button" href="${root}/StudentController?&todo=navigate&entity=chapter&action=view&id=${chapter.id}">Read</a>
@@ -66,8 +63,6 @@
 					        <div class="row callout alert">
 						        <div class="large-12 medium-12 columns clearfix">
 				                    <p>${chapter.title}</p>
-				                    <br>
-				                    Description : ${chapter.content}
 			                  </div>
 		            		</div>
 					    </c:otherwise>

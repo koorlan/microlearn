@@ -35,10 +35,19 @@
 
 	<br>
 
+	<div class="row">
+		<div class="large-8 columns large-offset-2 medium-8 medium-offset-2">
+		<h2>${module.title}</h2>
+		<h3>${module.content}</h3>
+		<a class="button float-right"
+			href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
+		<a class="alert button float-right"
+			href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>
 
-	<h1>Module View</h1>
-	<h2>${module.title}</h2>
-	<h3>${module.content}</h3>
+		</div>
+	</div>
+
+	
 
 	<div class="row">
 		<div class="large-8 columns large-offset-2 medium-8 medium-offset-2">
@@ -68,9 +77,7 @@
 
 	<div class="row">
 		<h4>Enrolled students</h4>
-		<ul>
 			<c:forEach items="${ students }" var="student">
-				<li>
 					<div class="row callout">
 	                  <div class="large-4 columns clearfix">
 	                    <a href="${root}/TeacherController?&todo=navigate&entity=student&action=view&id=${ module.id }&login=${student.login}">${student.firstName} ${ student.lastName }</a>
@@ -79,18 +86,10 @@
 	                  	<strong>Current chapter: #${ student.lastSuccess + 1}</strong>
 	                  </div>
             		</div>
-				</li>
 			</c:forEach>
-		</ul>
 	</div>
 
 
-	<div class="row">
-		<a class="button float-right"
-			href="${root}/TeacherController?&todo=navigate&entity=module&action=edit&id=${module.id}">Edit</a>
-		<a class="alert button float-right"
-			href="${root}/TeacherController?&todo=module_delete&id=${module.id}">Delete</a>
-	</div>
 
 
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>

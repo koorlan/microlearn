@@ -35,13 +35,19 @@
 	<div class="row">
 		<div class="large-8 large-offset-2 columns">
 			<div class="row">
-				<h1 class="large-6 medium-6 columns">Chapter ${chapter.title}</h1>
+					<div class="row">
+		<div class="callout">
+			<div id='titleOUT'></div>
+		</div>
+	</div>
 				<div class="large-6 medium-6 columns">
 					<br/>
 					<a href="${root}/StudentController?&todo=navigate&entity=module&action=view&id=${ chapter.moduleId }" class="button">Module summary</a>
 				</div>
 			</div>
-			<p class="text-center">${chapter.content}</p>
+			<div class="row">
+		<div id='contentOUT'></div>
+	</div>
 			<c:if test="${chapter.hasMCT }">
 				<em>Good answers required to success the test: ${chapter.mct.successCondition}</em>
 				<c:if test="${ score > -1 }">
@@ -77,10 +83,35 @@
 		</div>
 	</div>
 
+<div id='titleMD'>
+<!--
+# ${chapter.title}
+ -->
+</div>
+
+<div id='contentMD'>
+<!--
+${chapter.content}
+ -->
+</div>
+
+
 	<script src="${root}/foundation/js/vendor/jquery.js"></script>
 	<script src="${root}/foundation/js/vendor/what-input.js"></script>
 	<script src="${root}/foundation/js/vendor/foundation.js"></script>
 	<script src="${root}/foundation/js/app.js"></script>
+	<script src="${root}/foundation/micromarkdown.min.js"></script>
+	<script type="text/javascript">
+		window.onload = function() {
+ 		otitle = document.getElementById('titleOUT');
+  		ititle = document.getElementById('titleMD').innerHTML.split('<!--')[1].split('-->')[0];
+  		otitle.innerHTML = micromarkdown.parse(ititle);
 
+  		ocont = document.getElementById('contentOUT');
+  		icont = document.getElementById('contentMD').innerHTML.split('<!--')[1].split('-->')[0];
+  		ocont.innerHTML = micromarkdown.parse(icont);
+	}
+
+	</script>
 </body>
 </html>

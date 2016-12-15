@@ -190,10 +190,12 @@ public class StudentController extends HttpServlet {
 				if(request.getParameter("answer-" + String.valueOf(answer.getId())) == null)
 					break;
 				boolean isChecked = request.getParameter("answer-" + String.valueOf(answer.getId())).equals("on");
-				if(isChecked && !answer.getIsTrue())
+				if(isChecked && !answer.getIsTrue()){
 					isIncorrect = true;
-				else
-					hasAnswered = true;				
+				}
+				else{
+					hasAnswered = true;
+				}
 			}
 			if(!isIncorrect && hasAnswered)
 				correctAnswers++;

@@ -10,6 +10,7 @@ import javax.persistence.TransactionRequiredException;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.microlearn.entity.Account;
+import com.microlearn.entity.Admin;
 import com.microlearn.entity.Student;
 import com.microlearn.entity.Teacher;
 import com.microlearn.entity.dto.StudentDto;
@@ -59,7 +60,7 @@ public class AccountBean {
 	public boolean addTeacher(String login, String password, String firstName, String lastName) {
 		Teacher teacher = new Teacher();
 		teacher.setLogin(login);
-		teacher.setPassword(password);
+		teacher.setPassword(DigestUtils.sha256Hex(password));
 		teacher.setFirstName(firstName);
 		teacher.setLastName(lastName);
 		
@@ -67,7 +68,7 @@ public class AccountBean {
 			em.persist(teacher);
 			return true;
 		}
-		catch (EntityExistsException | IllegalArgumentException | TransactionRequiredException e) {
+		catch (Exception e) {
 			return false;
 		}
 	}
@@ -75,7 +76,7 @@ public class AccountBean {
 	public boolean addStudent(String login, String password, String firstName, String lastName) {
 		Student student = new Student();
 		student.setLogin(login);
-		student.setPassword(password);
+		student.setPassword(DigestUtils.sha256Hex(password));
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
 		
@@ -83,7 +84,23 @@ public class AccountBean {
 			em.persist(student);
 			return true;
 		}
-		catch (EntityExistsException | IllegalArgumentException | TransactionRequiredException e) {
+		catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean addAdmin(String login, String password, String firstName, String lastName) {
+		Admin admin = new Admin();
+		admin.setLogin(login);
+		admin.setPassword(DigestUtils.sha256Hex(password));
+		admin.setFirstName(firstName);
+		admin.setLastName(lastName);
+		
+		try {
+			em.persist(admin);
+			return true;
+		}
+		catch (Exception e) {
 			return false;
 		}
 	}
