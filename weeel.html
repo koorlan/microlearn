@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Club Med GPT – Your AI Assistant</title>
+
+  <!-- 
+    Club Med's brand palette typically includes:
+    - Soft warm backgrounds
+    - Clean typography
+    - Large hero text 
+    - Minimalistic layout
+    Adjust the colors below as desired to match Club Med’s identity.
+  -->
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f7f2ee; /* A soft, warm background tint */
+      color: #333;
+    }
+
+    header {
+      background-color: #fff; 
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: #333;
+      margin-left: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    header nav a:hover {
+      color: #00a2a2; /* A teal-like accent color */
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem;
+      background-color: #fbf9f7;
+    }
+
+    .hero-text {
+      flex: 1 1 500px;
+      max-width: 600px;
+      margin-right: 2rem;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text a.cta-button {
+      background-color: #ff9f1c;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.8rem 1.2rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .hero-text a.cta-button:hover {
+      background-color: #ffa733;
+    }
+
+    .hero-image {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    /* Sections */
+    section {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    section p {
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .feature-card {
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-2px);
+    }
+    .feature-card h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: #333;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* Prompt Best Practices */
+    .prompt-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .prompt-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+    .prompt-steps li {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .prompt-steps li span {
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Info Boxes or Columns */
+    .info-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .info-box {
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .info-box h3 {
+      margin-bottom: 0.8rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    footer a {
+      color: #00a2a2;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="logo">Club Med GPT</div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#prompts">Prompt Tips</a>
+      <a href="#ethics">Ethics</a>
+      <a href="#help">Help</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Club Med GPT,<br>That’s l’Esprit Libre</h1>
+      <p>
+        Welcome to our brand-new <strong>Club Med GPT</strong> – your personal assistant powered by 
+        cutting-edge AI. Enjoy real-time answers and simplified secure access 
+        to knowledge, all in one platform. 
+      </p>
+      <a href="#features" class="cta-button">Discover the Features</a>
+    </div>
+    <div class="hero-image">
+      <!-- Replace with your actual hero image -->
+      <img 
+        src="./welcome.png" 
+        alt="A user enjoying the resort pool" 
+      />
+    </div>
+  </div>
+
+  <!-- What is Club Med GPT? -->
+  <section>
+    <h2>What’s Club Med GPT?</h2>
+    <p>
+      Club Med GPT is an <strong>AI assistant</strong> dedicated to all Club Med employees. 
+      It answers your questions in natural language, helps you generate or summarize text, 
+      and can even translate content into multiple languages. All in a <em>secure Club Med environment</em> 
+      to protect you and our organization’s data.
+    </p>
+    <p>
+      Our goal: <strong>save you time</strong> by assisting in day-to-day tasks, giving you 
+      quick and efficient answers, and <strong>promoting access to knowledge</strong> across 
+      various domains.
+    </p>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <h2>Key Features</h2>
+    <p>Explore what Club Med GPT can do for you:</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Generate Content</h3>
+        <p>Draft articles, emails, marketing texts, or even code.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Synthesizing & Summaries</h3>
+        <p>Extract important elements from any text or create concise bullet lists.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Search for Knowledge</h3>
+        <p>Search across public data or documents you upload to find answers quickly.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Rephrase & Translate</h3>
+        <p>Reformulate texts for specific contexts and translate across multiple languages.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Classify Text or Images</h3>
+        <p>Identify relevant categories or keywords in your content.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Understand Intentions</h3>
+        <p>Leverage natural language understanding to tailor content to your needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Getting Started -->
+  <section>
+    <h2>How to Get Started</h2>
+    <ol>
+      <li><strong>Connect:</strong> From any browser, go to <a href="https://clubmedgpt.ai.clubmed.com/">https://clubmedgpt.ai.clubmed.com/</a> and select “Connexion with Microsoft.”</li>
+      <li><strong>Authenticate:</strong> Enter your usual Club Med login and password.</li>
+      <li><strong>Begin Chatting:</strong> Create a new conversation, type your prompt in natural language, or use voice input if you prefer.</li>
+      <li><strong>Enhance Your Prompts:</strong> Upload files, images, or enable web search for real-time information.</li>
+      <li><strong>Manage History:</strong> Rename conversation titles, add custom labels, and share with colleagues securely.</li>
+    </ol>
+  </section>
+
+  <!-- Prompt Tips -->
+  <section id="prompts">
+    <h2>Prompting Best Practices</h2>
+    <p>
+      A detailed prompt avoids incorrect or out-of-context responses. Provide context, 
+      use examples, and specify the desired format to get the best results. 
+      Below are the <strong>6 commandments</strong> for effective prompting:
+    </p>
+    <div class="prompt-steps">
+      <ul>
+        <li><span>1. Specify the format:</span> “Please provide a bulleted list.”</li>
+        <li><span>2. Give examples:</span> “Summarize the text using the structure of Example 1.”</li>
+        <li><span>3. Give context:</span> “You're an insurance lawyer explaining this to a layperson.”</li>
+      </ul>
+      <ul>
+        <li><span>4. Include steps:</span> “First list all resorts, then filter only those suitable for 3-year-olds.”</li>
+        <li><span>5. Put limits:</span> “List only 5 examples, excluding mountain resorts.”</li>
+        <li><span>6. Reformulate:</span> If results aren’t correct, rephrase your query for clarity.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Ethics and Confidentiality -->
+  <section id="ethics">
+    <h2>Ethics & Responsible Use</h2>
+    <div class="info-columns">
+      <div class="info-box">
+        <h3>Respect Club Med’s Principles</h3>
+        <p>
+          We are committed to responsible use of AI. 
+          Club Med GPT is designed to protect both your data and our organization’s data. 
+          Always respect Club Med’s fundamental AI principles: 
+          <a href="https://www.clubmed.us/l/fundamentals-principles-use-of-artificial-intelligence">
+            fundamentals-principles-use-of-artificial-intelligence
+          </a>.
+        </p>
+      </div>
+      <div class="info-box">
+        <h3>Data Protection</h3>
+        <p>
+          Avoid sharing confidential or non-public information with external tools. 
+          Club Med GPT is secure, but always ensure the information you upload is relevant 
+          and that you have proper authorization to share it.
+        </p>
+      </div>
+      <div class="info-box">
+        <h3>Environmental Responsibility</h3>
+        <p>
+          Please consider asking essential questions only and optimize your prompts. 
+          Together, we can minimize our carbon footprint while using AI.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Help Section -->
+  <section id="help">
+    <h2>Need Help?</h2>
+    <p>
+      If you have any questions, specific requirements, or wish to report an incident, 
+      please submit a JIRA ticket on the <a href="https://clubmed.atlassian.net/servicedesk/customer/portals">JIRA Portal</a>. 
+      Simply select “Club Med GPT” in the application list to open your ticket.
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      &copy; 2025 Club Med GPT | 
+      <a href="https://clubmedgpt.ai.clubmed.com/">Access Club Med GPT</a> | 
+      <a href="https://www.clubmed.us/l/fundamentals-principles-use-of-artificial-intelligence">
+        AI Fundamentals
+      </a>
+    </p>
+  </footer>
+</body>
+</html>
